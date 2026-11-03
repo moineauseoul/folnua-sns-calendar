@@ -406,6 +406,8 @@
     font-size:11px; font-weight:600; padding:3px 10px; border-radius:12px;
     background:#EDEBE6; color:var(--ink); user-select:none;
   }
+  .bp-note{ font-size:12px; color:var(--ink-faint); margin-top:14px; line-height:1.55; }
+  #bp-event-link{ display:inline-block; text-decoration:none; }
   .story-extra-fields{ display:flex; flex-direction:column; gap:8px; margin-top:8px; }
   .story-extra-input{ width:100%; }
 
@@ -787,6 +789,18 @@
   </div>
 </div>
 
+<!-- ===== 브랜딩플래너 일정 (읽기 전용) modal ===== -->
+<div class="modal-overlay" id="bp-event-modal">
+  <div class="modal-box wide">
+    <div class="modal-title">브랜딩플래너 일정</div>
+    <div id="bp-event-body"></div>
+    <div class="modal-actions">
+      <button type="button" class="ghost-btn" id="bp-event-close-btn">닫기</button>
+      <a class="outline-btn" id="bp-event-link" href="https://moineauseoul.github.io/branding-planner/" target="_blank" rel="noopener noreferrer">브랜딩플래너에서 보기 ↗</a>
+    </div>
+  </div>
+</div>
+
 <!-- ===== 작성자 이름 modal ===== -->
 <div class="modal-overlay" id="name-modal">
   <div class="modal-box">
@@ -828,6 +842,15 @@
   let isOwner = true; // 누구나 로그인 없이 작성/수정/삭제 가능
   let posts = [];
   let events = [];
+  let bpSchedules = []; // 브랜딩플래너 일정(읽기 전용, 단방향 연동)
+  const BP_LEGACY_COLOR = { amber:"#D9822B", rose:"#C2568B", green:"#2F9E44", violet:"#7048E8", blue:"#1C7ED6", gray:"#868E96", red:"#E03131", teal:"#0C8599" };
+  function bpToEvent(r){
+    let color = r.color || "#1A1A1A";
+    if(!/^#[0-9A-Fa-f]{6}$/.test(color)) color = BP_LEGACY_COLOR[color] || "#1A1A1A";
+    return { id:"bp-"+r.id, title:r.title||"", start_date:r.start_date, end_date:r.end_date||r.start_date,
+             color, category:r.category||null, content:r.content||"", readonly:true };
+  }
+  function allEvents(){ return events.concat(bpSchedules.map(bpToEvent)); }
   let stories = [];
   let memos = [];
   let curMonth = new Date(); curMonth.setDate(1);
@@ -1193,7 +1216,7 @@
       const validWeek = week.filter(Boolean);
       if(validWeek.length===0) return;
       const weekStart = validWeek[0], weekEnd = validWeek[validWeek.length-1];
-      const weekEvents = events.filter(ev=> ev.end_date >= weekStart && ev.start_date <= weekEnd);
+      const weekEvents = allEvents().filter(ev=> ev.end_date >= weekStart && ev.start_date <= weekEnd);
       if(weekEvents.length===0) return;
 
       const segments = weekEvents.map(ev=>{
@@ -1240,7 +1263,7 @@
         bar.style.background = eventColor(seg.ev);
         bar.style.color = readableTextColor(eventColor(seg.ev));
         bar.textContent = seg.ev.title;
-        bar.addEventListener("click", e=>{ e.stopPropagation(); openEventModalForEdit(seg.ev); });
+        bar.addEventListener("click", e=>{ e.stopPropagation(); if(seg.ev.readonly) openBpEvent(seg.ev); else openEventModalForEdit(seg.ev); });
         barsLayer.appendChild(bar);
       });
     });
@@ -1646,6 +1669,23 @@
     document.getElementById("category-chip-row").style.opacity = enabled ? "" : "0.6";
     document.getElementById("cat-edit-toggle").style.display = enabled ? "" : "none";
   }
+
+  function openBpEvent(ev){
+    const cat = CATEGORY_DEFS.find(c=>c.key===ev.category);
+    const period = ev.start_date===ev.end_date ? ev.start_date : (ev.start_date + " ~ " + ev.end_date);
+    document.getElementById("bp-event-body").innerHTML = `
+      <div class="sd-badges">
+        <span class="story-part-badge" style="background:${eventColor(ev)};color:${readableTextColor(eventColor(ev))};">${cat ? escapeHtml(cat.label) : "일정"}</span>
+      </div>
+      <div class="sd-title">${escapeHtml(ev.title)}</div>
+      <div class="sd-grid">
+        <div class="sd-full sd-field"><div class="sd-label">기간</div><div class="sd-value">${period}</div></div>
+        <div class="sd-full sd-field"><div class="sd-label">내용</div>${ev.content ? `<div class="sd-box">${escapeHtml(ev.content)}</div>` : '<div class="sd-value" style="color:var(--ink-faint);font-weight:400;">없음</div>'}</div>
+      </div>
+      <div class="bp-note">브랜딩플래너에 등록된 일정이에요. 수정은 브랜딩플래너에서만 할 수 있어요.</div>`;
+    openModal("bp-event-modal");
+  }
+  document.getElementById("bp-event-close-btn").addEventListener("click", ()=> closeModal("bp-event-modal"));
 
   function openEventModalForNew(dateStr){
     if(!isOwner){ openModal("login-modal"); return; }
@@ -2205,12 +2245,15 @@
 
   /* ================= 데이터 불러오기 + 실시간 동기화 ================= */
   async function initialLoad(){
-    const [postsRes, eventsRes, storiesRes, memosRes] = await Promise.all([
+    const [postsRes, eventsRes, storiesRes, memosRes, bpRes] = await Promise.all([
       sb.from("posts").select("*"),
       sb.from("events").select("*"),
       sb.from("stories").select("*"),
-      sb.from("cc_memos").select("*")
+      sb.from("cc_memos").select("*"),
+      sb.from("schedules").select("*")
     ]);
+    if(bpRes.error){ console.warn("브랜딩플래너 일정 불러오기 실패:", bpRes.error.message); }
+    bpSchedules = (bpRes.data || []).filter(r=> r.share_cc === true);
     if(postsRes.error || eventsRes.error || storiesRes.error || memosRes.error){
       console.error(postsRes.error || eventsRes.error || storiesRes.error || memosRes.error);
       alert("데이터를 불러오지 못했어요. 잠시 후 새로고침해주세요.");
@@ -2266,6 +2309,13 @@
   sb.channel("events-changes")
     .on("postgres_changes", { event:"*", schema:"public", table:"events" }, payload=>{
       applyRealtimeChange(events, payload, "events");
+      render();
+    }).subscribe();
+  sb.channel("bp-schedules-changes")
+    .on("postgres_changes", { event:"*", schema:"public", table:"schedules" }, payload=>{
+      if(payload.eventType === "DELETE") removeLocal(bpSchedules, payload.old.id);
+      else if(payload.new.share_cc === true) upsertLocal(bpSchedules, payload.new);
+      else removeLocal(bpSchedules, payload.new.id);
       render();
     }).subscribe();
   sb.channel("stories-changes")
