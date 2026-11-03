@@ -739,12 +739,14 @@
 
   /* ---------- 일정 카테고리(컬러칩) ---------- */
   const CATEGORY_DEFS = [
-    { key:"offline",   label:"오프라인", def:"#FF6B6B" },
-    { key:"online",    label:"온라인",   def:"#4D96FF" },
-    { key:"marketing", label:"마케팅",   def:"#FFB84D" },
-    { key:"branding",  label:"브랜딩",   def:"#9B6BFF" }
+    { key:"branding",  label:"브랜딩",   def:"#A47C91" },
+    { key:"marketing", label:"마케팅",   def:"#C49B65" },
+    { key:"online",    label:"온라인",   def:"#7898B5" },
+    { key:"offline",   label:"오프라인", def:"#7D9B89" },
+    { key:"product",   label:"상품기획", def:"#9186AE" },
+    { key:"etc",       label:"기타",     def:"#AAAAAA" }
   ];
-  const CATEGORY_STORAGE_KEY = "cc_category_colors_v1";
+  const CATEGORY_STORAGE_KEY = "cc_category_colors_v2";
   let categoryColors = {};
   (function loadCategoryColors(){
     let saved = {};
@@ -772,6 +774,12 @@
 
   function openModal(id){ document.getElementById(id).classList.add("open"); }
   function closeModal(id){ document.getElementById(id).classList.remove("open"); }
+
+  /* ESC 키로 열려 있는 모달 닫기 */
+  document.addEventListener("keydown", e=>{
+    if(e.key !== "Escape") return;
+    document.querySelectorAll(".modal-overlay.open").forEach(m=> closeModal(m.id));
+  });
 
   function readableTextColor(hex){
     if(!hex) return "#fff";
