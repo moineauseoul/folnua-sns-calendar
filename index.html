@@ -246,6 +246,7 @@
     font-size:12.5px; color:var(--ink-soft); background:var(--surface); user-select:none;
   }
   .category-chip .cat-dot{ width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+  .category-chip.type-chip{ justify-content:center; padding:9px 22px; line-height:1; font-size:13px; min-width:104px; }
   .category-chip.sel{ border-color:var(--ink); color:var(--ink); font-weight:700; background:var(--bg); }
   .cat-edit-toggle{
     margin-left:auto; font-size:11.5px; color:var(--ink-soft); cursor:pointer; text-decoration:underline;
@@ -392,6 +393,17 @@
   }
   .story-extras-line span{
     background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:1px 8px;
+  }
+  .story-side{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .story-side .story-extras-line{ margin-top:0; flex-wrap:nowrap; gap:6px; }
+  .story-side .story-extras-line span{ line-height:1.5; }
+  .sd-field{ margin-bottom:14px; }
+  .sd-field:last-child{ margin-bottom:0; }
+  .preview-type-wrap{ padding-bottom:16px; margin-bottom:18px; border-bottom:1px solid var(--line); }
+  .preview-type{
+    display:inline-flex; align-items:center; justify-content:center; line-height:1.4;
+    font-size:11px; font-weight:600; padding:3px 10px; border-radius:12px;
+    background:#EDEBE6; color:var(--ink); user-select:none;
   }
   .story-extra-fields{ display:flex; flex-direction:column; gap:8px; margin-top:8px; }
   .story-extra-input{ width:100%; }
@@ -657,6 +669,10 @@
         </div>
         <div class="img-chip-strip" id="img-chip-strip"></div>
       </div>
+      <div class="field-row">
+        <label class="field-label">게시 유형</label>
+        <div class="category-chip-row" id="post-type-row"></div>
+      </div>
       <div class="field-row split">
         <div>
           <label class="field-label">업로드 예정일</label>
@@ -670,10 +686,6 @@
       <div class="field-row">
         <label class="field-label">캡션</label>
         <textarea id="post-caption"></textarea>
-      </div>
-      <div class="field-row">
-        <label class="field-label">해시태그</label>
-        <input type="text" id="post-hashtags">
       </div>
       <div class="field-row">
         <label class="field-label">상태</label>
@@ -756,6 +768,7 @@
           <div class="preview-username">folnua_official</div>
         </div>
         <div class="preview-body">
+          <div class="preview-type-wrap"><span class="preview-type" id="preview-type"></span></div>
           <div class="preview-caption" id="preview-caption"></div>
           <div class="preview-hashtags" id="preview-hashtags"></div>
         </div>
@@ -1409,6 +1422,7 @@
       });
     }
 
+    document.getElementById("preview-type").textContent = previewPost.post_type === "reels" ? "REELS" : "FEED";
     document.getElementById("preview-caption").textContent = previewPost.caption || "(캡션 없음)";
     const hashtagsEl = document.getElementById("preview-hashtags");
     hashtagsEl.textContent = previewPost.hashtags || "";
@@ -1438,15 +1452,28 @@
     openPostModalForEdit(previewPost);
   });
 
+  let selectedPostType = "feed";
+  function renderPostTypeChips(){
+    const row = document.getElementById("post-type-row");
+    row.innerHTML = "";
+    [{key:"feed",label:"이미지 (FEED)"},{key:"reels",label:"릴스 (REELS)"}].forEach(o=>{
+      const chip = document.createElement("div");
+      chip.className = "category-chip type-chip" + (selectedPostType===o.key ? " sel" : "");
+      chip.textContent = o.label;
+      chip.addEventListener("click", ()=>{ if(!isOwner) return; selectedPostType = o.key; renderPostTypeChips(); });
+      row.appendChild(chip);
+    });
+  }
+
   function openPostModalForNew(dateStr){
     if(!isOwner){ openModal("login-modal"); return; }
     editingPostId = null;
     resetImagePicker();
     document.getElementById("post-modal-title").textContent = "새 포스트";
+    selectedPostType = "feed"; renderPostTypeChips();
     document.getElementById("post-date").value = dateStr || todayStr();
     document.getElementById("post-time").value = "";
     document.getElementById("post-caption").value = "";
-    document.getElementById("post-hashtags").value = "";
     setStatusSelect("planned");
     document.getElementById("post-delete-btn").style.display = "none";
     setLastEdit("post-last-edit", null);
@@ -1460,10 +1487,10 @@
     imageItems = (p.images || []).map(url=> ({ id:url, kind:"existing", url }));
     renderImageChips();
     document.getElementById("post-modal-title").textContent = isOwner ? "포스트 수정" : "포스트 내용";
+    selectedPostType = p.post_type === "reels" ? "reels" : "feed"; renderPostTypeChips();
     document.getElementById("post-date").value = p.scheduled_date;
     document.getElementById("post-time").value = (p.scheduled_time || "").slice(0,5);
     document.getElementById("post-caption").value = p.caption || "";
-    document.getElementById("post-hashtags").value = p.hashtags || "";
     setStatusSelect(p.status || "planned");
     document.getElementById("post-delete-btn").style.display = isOwner ? "" : "none";
     setLastEdit("post-last-edit", p);
@@ -1497,7 +1524,6 @@
     const date = document.getElementById("post-date").value;
     const time = document.getElementById("post-time").value || null;
     const caption = document.getElementById("post-caption").value.trim();
-    const hashtags = document.getElementById("post-hashtags").value.trim();
     const status = document.querySelector(".status-opt.sel")?.dataset.status || "planned";
 
     let images;
@@ -1505,14 +1531,15 @@
     catch(err){ return; }
 
     if(editingPostId){
-      const row = Object.assign({ id: editingPostId, images, caption, hashtags, scheduled_date: date, scheduled_time: time, status }, stamp);
+      const post_type = selectedPostType;
+      const row = Object.assign({ id: editingPostId, images, caption, scheduled_date: date, scheduled_time: time, status, post_type }, stamp);
       const { error } = await sb.from("posts").update({
-        images, caption, hashtags, scheduled_date: date, scheduled_time: time, status, ...stamp
+        images, caption, scheduled_date: date, scheduled_time: time, status, post_type, ...stamp
       }).eq("id", editingPostId);
       if(error){ alert("수정 실패: "+error.message); return; }
       upsertLocal(posts, row);
     } else {
-      const row = Object.assign({ id: uidP(), images, caption, hashtags, scheduled_date: date, scheduled_time: time, status }, stamp);
+      const row = Object.assign({ id: uidP(), images, caption, scheduled_date: date, scheduled_time: time, status, post_type: selectedPostType }, stamp);
       const { error } = await sb.from("posts").insert(row);
       if(error){ alert("저장 실패: "+error.message); return; }
       upsertLocal(posts, row);
@@ -1764,19 +1791,21 @@
         row.className = "story-row";
         const partColor = categoryColors[s.part] || "#999999";
         const extraBadges = [];
-        if(s.extra_link !== null && s.extra_link !== undefined) extraBadges.push(`<span>🔗 링크${s.extra_link ? ": "+escapeHtml(s.extra_link) : ""}</span>`);
-        if(s.extra_regram !== null && s.extra_regram !== undefined) extraBadges.push(`<span>🔁 리그램${s.extra_regram ? " "+escapeHtml(s.extra_regram) : ""}</span>`);
-        if(s.extra_countdown !== null && s.extra_countdown !== undefined) extraBadges.push(`<span>⏱ 카운트다운${s.extra_countdown ? " "+escapeHtml(s.extra_countdown) : ""}</span>`);
+        if(s.extra_link !== null && s.extra_link !== undefined) extraBadges.push(`<span title="링크 삽입">🔗</span>`);
+        if(s.extra_regram !== null && s.extra_regram !== undefined) extraBadges.push(`<span title="리그램">🔁</span>`);
+        if(s.extra_countdown !== null && s.extra_countdown !== undefined) extraBadges.push(`<span title="카운트다운">⏱</span>`);
+        if(s.notes) extraBadges.push(`<span title="비고">📝</span>`);
         row.innerHTML = `
           <div class="story-time">${(s.scheduled_time||"").slice(0,5)}</div>
           <span class="story-part-badge" style="background:${partColor};">${escapeHtml(partLabel(s.part))}</span>
           <div class="story-main">
             <div class="story-title-text">${escapeHtml(s.title||"")}</div>
             ${s.campaign ? `<div class="story-campaign">${escapeHtml(s.campaign)}</div>` : ""}
-            ${extraBadges.length ? `<div class="story-extras-line">${extraBadges.join("")}</div>` : ""}
-            ${s.notes ? `<div class="story-notes">${escapeHtml(s.notes)}</div>` : ""}
           </div>
-          <button type="button" class="story-status-btn ${s.status==='posted' ? 'posted' : ''}" title="클릭해서 상태 변경">${STORY_STATUS_LABEL[s.status==='posted' ? 'posted' : 'planned']}</button>
+          <div class="story-side">
+            ${extraBadges.length ? `<div class="story-extras-line">${extraBadges.join("")}</div>` : ""}
+            <button type="button" class="story-status-btn ${s.status==='posted' ? 'posted' : ''}" title="클릭해서 상태 변경">${STORY_STATUS_LABEL[s.status==='posted' ? 'posted' : 'planned']}</button>
+          </div>
         `;
         row.querySelector(".story-status-btn").addEventListener("click", async ev=>{
           ev.stopPropagation();
@@ -1789,7 +1818,6 @@
           upsertLocal(stories, Object.assign({}, s, { status }, stamp));
           render();
         });
-        if(s.notes) row.title = "비고: " + s.notes;
         row.addEventListener("click", ()=> openStoryDetail(s));
         rows.appendChild(row);
       });
@@ -1924,13 +1952,14 @@
     const partColor = categoryColors[s.part] || "#999999";
     const wd = WEEKDAYS[new Date(s.scheduled_date + "T00:00:00").getDay()];
     const has = v => v !== null && v !== undefined;
+    const boxField = (label, inner) => `<div class="sd-full sd-field"><div class="sd-label">${label}</div><div class="sd-box">${inner}</div></div>`;
     const extras = [];
     if(has(s.extra_link)){
       const u = safeUrl(s.extra_link);
-      extras.push(`<div class="sd-extra-line">🔗 링크 삽입${s.extra_link ? ": " + (u ? `<a href="${escapeHtml(u)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.extra_link)}</a>` : escapeHtml(s.extra_link)) : ""}</div>`);
+      extras.push(boxField("🔗 링크 삽입", s.extra_link ? (u ? `<a href="${escapeHtml(u)}" target="_blank" rel="noopener noreferrer" style="text-decoration:underline;">${escapeHtml(s.extra_link)}</a>` : escapeHtml(s.extra_link)) : '<span style="color:var(--ink-faint);">내용 없음</span>'));
     }
-    if(has(s.extra_regram)) extras.push(`<div class="sd-extra-line">🔁 리그램${s.extra_regram ? ": " + escapeHtml(s.extra_regram) : ""}</div>`);
-    if(has(s.extra_countdown)) extras.push(`<div class="sd-extra-line">⏱ 카운트다운${s.extra_countdown ? ": " + escapeHtml(s.extra_countdown) : ""}</div>`);
+    if(has(s.extra_regram)) extras.push(boxField("🔁 리그램 계정", s.extra_regram ? escapeHtml(s.extra_regram) : '<span style="color:var(--ink-faint);">내용 없음</span>'));
+    if(has(s.extra_countdown)) extras.push(boxField("⏱ 카운트다운", s.extra_countdown ? escapeHtml(s.extra_countdown) : '<span style="color:var(--ink-faint);">내용 없음</span>'));
     document.getElementById("story-detail-body").innerHTML = `
       <div class="sd-badges">
         <span class="story-part-badge" style="background:${partColor};">${escapeHtml(partLabel(s.part))}</span>
@@ -1941,8 +1970,9 @@
       <div class="sd-grid">
         <div><div class="sd-label">날짜</div><div class="sd-value">${s.scheduled_date} (${wd})</div></div>
         <div><div class="sd-label">시간</div><div class="sd-value">${(s.scheduled_time||"").slice(0,5)}</div></div>
-        <div class="sd-full"><div class="sd-label">추가 요청사항</div><div class="sd-value">${extras.length ? extras.join("") : '<span style="color:var(--ink-faint);font-weight:400;">없음</span>'}</div></div>
-        <div class="sd-full"><div class="sd-label">비고</div>${s.notes ? `<div class="sd-box">${escapeHtml(s.notes)}</div>` : '<div class="sd-value" style="color:var(--ink-faint);font-weight:400;">없음</div>'}</div>
+        ${extras.join("")}
+        ${extras.length ? "" : `<div class="sd-full sd-field"><div class="sd-label">추가 요청사항</div><div class="sd-value" style="color:var(--ink-faint);font-weight:400;">없음</div></div>`}
+        <div class="sd-full sd-field"><div class="sd-label">📝 비고</div>${s.notes ? `<div class="sd-box">${escapeHtml(s.notes)}</div>` : '<div class="sd-value" style="color:var(--ink-faint);font-weight:400;">없음</div>'}</div>
       </div>`;
     setLastEdit("story-detail-last-edit", s);
     openModal("story-detail-modal");
