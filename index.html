@@ -456,6 +456,51 @@
     padding:16px 18px 16px 36px; overflow-y:auto; flex:1; min-height:0;
     scrollbar-width:thin; scrollbar-color:#E4E2DC transparent;
   }
+
+  /* ===== 인스타 피드 미리보기 (모바일 프레임) ===== */
+  .phone-frame{ width:480px; max-width:100%; height:min(920px,95vh); background:#fff; border-radius:30px; border:8px solid #fff; box-shadow:0 8px 40px rgba(0,0,0,.25); display:flex; flex-direction:column; overflow:hidden; position:relative; }
+  .ig-top{ display:flex; align-items:center; gap:14px; padding:22px 22px 16px; font-size:17px; font-weight:700; flex-shrink:0; }
+  .ig-top .ig-user{ flex:1; }
+  .ig-top svg{ width:22px; height:22px; stroke:#1A1A1A; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; cursor:pointer; }
+  .ig-more{ background:none; border:0; font-size:20px; line-height:1; letter-spacing:1px; cursor:pointer; padding:0 2px; }
+  .ig-info{ padding:0 24px 22px; font-size:13px; line-height:1.7; }
+  .ig-info .ig-cat{ color:#8A8A8A; }
+  .ig-info .ig-sub{ font-weight:700; margin-top:2px; }
+  .ig-info .ig-link{ font-weight:600; margin-top:10px; display:flex; align-items:center; gap:8px; }
+  .ig-info .ig-loc{ display:inline-flex; align-items:center; gap:5px; margin-top:16px; border:1px solid var(--line); border-radius:999px; padding:7px 16px; font-size:12px; font-weight:600; }
+  .ig-scroll{ flex:1; overflow-y:auto; min-height:0; scrollbar-width:none; -ms-overflow-style:none; }
+  .ig-scroll::-webkit-scrollbar{ display:none; width:0; height:0; }
+  .ig-profile{ display:flex; align-items:center; gap:28px; padding:18px 24px 22px; }
+  .ig-profile-r{ flex:1; }
+  .ig-name{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ig-avatar{ width:84px; height:84px; border-radius:50%; border:1px solid var(--line); box-shadow:0 0 0 3px #fff, 0 0 0 5px #DADDE2; background:#fff url("data:image/jpeg;base64,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") center/cover no-repeat; flex-shrink:0; }
+  .ig-stats{ display:flex; justify-content:space-between; font-size:12.5px; }
+  .ig-stats b{ display:block; font-size:16px; }
+  .ig-tabs{ display:flex; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .ig-tab{ flex:1; padding:14px 0; text-align:center; font-size:12.5px; font-weight:600; color:var(--ink-faint); cursor:pointer; background:none; border:0; border-bottom:2px solid transparent; font-family:inherit; }
+  .ig-tab.sel{ color:var(--ink); border-bottom-color:var(--ink); }
+  .ig-filter{ display:flex; gap:8px; padding:6px 24px 18px; }
+  .ig-chip{ font-size:11.5px; padding:6px 14px; border-radius:999px; border:1px solid var(--line); background:#fff; color:var(--ink-soft); cursor:pointer; font-family:inherit; }
+  .ig-chip.sel{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .ig-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; }
+  .ig-cell{ position:relative; aspect-ratio:3/4; background:#F1EFEA; overflow:hidden; cursor:pointer; }
+  .ig-cell img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .ig-cell.dim img{ opacity:0.55; }
+  .ig-cell .ig-txt{ padding:8px; font-size:10.5px; color:var(--ink-soft); line-height:1.4; overflow:hidden; }
+  .ig-badge{ position:absolute; top:6px; right:6px; color:#fff; font-size:13px; text-shadow:0 0 3px rgba(0,0,0,.6); }
+  .ig-pin{ position:absolute; top:6px; left:6px; font-size:12px; filter:drop-shadow(0 0 2px rgba(0,0,0,.5)); }
+  .pin-toggle{ display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer; user-select:none; }
+  .pin-toggle input{ width:16px; height:16px; accent-color:#1A1A1A; margin:0; }
+  .ig-stat-tag{ position:absolute; left:5px; bottom:5px; font-size:9.5px; font-weight:600; padding:1px 5px; border-radius:3px; background:rgba(255,255,255,.92); color:var(--ink-soft); }
+  .ig-post{ border-bottom:1px solid var(--line); padding-bottom:16px; cursor:pointer; }
+  .ig-post-head{ display:flex; align-items:center; gap:8px; padding:14px 16px; font-size:12.5px; font-weight:700; }
+  .ig-post-head .ig-avatar{ width:28px; height:28px; box-shadow:none; }
+  .ig-post-head .ig-date{ margin-left:auto; font-weight:400; font-size:11px; color:var(--ink-faint); }
+  .ig-post-media{ position:relative; aspect-ratio:3/4; background:#F1EFEA; }
+  .ig-post-media img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .ig-post-cap{ padding:14px 16px 0; font-size:12.5px; line-height:1.6; white-space:pre-wrap; word-break:break-word; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  .ig-post-cap b{ margin-right:6px; }
+  .ig-empty{ padding:40px 16px; text-align:center; font-size:12.5px; color:var(--ink-faint); }
   .preview-body::-webkit-scrollbar{ width:4px; }
   .preview-body::-webkit-scrollbar-track{ background:transparent; }
   .preview-body::-webkit-scrollbar-thumb{ background:#E4E2DC; border-radius:4px; }
@@ -505,6 +550,7 @@
     <div class="brand-title">📷 Content Calendar</div>
     <div class="top-actions">
       <button type="button" class="link-btn" id="editor-name-btn" title="작성자 이름 변경"></button>
+      <button type="button" class="outline-btn view-only-feed" id="open-ig-btn">📱 피드 미리보기</button>
       <button type="button" class="link-btn" id="open-trash-btn">휴지통<span id="trash-count"></span></button>
       <button id="add-event-btn" class="outline-btn owner-only view-only-feed">+ 일정</button>
       <button id="add-post-btn" class="primary-btn owner-only view-only-feed">+ 새 포스트</button>
@@ -676,6 +722,9 @@
         <label class="field-label">게시 유형</label>
         <div class="category-chip-row" id="post-type-row"></div>
       </div>
+      <div class="field-row">
+        <label class="pin-toggle"><input type="checkbox" id="post-pinned"><span>📌 피드 미리보기 상단에 고정 (최대 3개)</span></label>
+      </div>
       <div class="field-row split">
         <div>
           <label class="field-label">업로드 예정일</label>
@@ -785,6 +834,40 @@
           <button type="button" class="primary-btn owner-only" id="preview-edit-btn">수정</button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 인스타 피드 미리보기 (모바일) modal ===== -->
+<div class="modal-overlay" id="ig-modal">
+  <div class="phone-frame">
+    <div class="ig-top">
+      <svg id="ig-close-btn" viewBox="0 0 24 24" aria-label="닫기"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      <span class="ig-user">folnua_official</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path><polyline points="9.5 11 11.2 12.7 14.5 9.5"></polyline></svg>
+      <button type="button" class="ig-more" aria-hidden="true">•••</button>
+    </div>
+    <div class="ig-scroll">
+      <div class="ig-profile">
+        <div class="ig-avatar"></div>
+        <div class="ig-profile-r">
+          <div class="ig-name">Folnua 폴뉴아</div>
+          <div class="ig-stats">
+            <div><b id="ig-count">-</b>게시물</div>
+            <div><b>-</b>팔로워</div>
+            <div><b>-</b>팔로잉</div>
+          </div>
+        </div>
+      </div>
+      <div class="ig-info">
+        <div class="ig-cat">브랜드</div>
+        <div>Folnua means “For you alone”.</div>
+        <div class="ig-sub">번역 보기</div>
+        <div class="ig-link"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#1A1A1A;fill:none;stroke-width:2;stroke-linecap:round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"></path><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"></path></svg>www.folnua.com 외 4개</div>
+        <div class="ig-loc"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#1A1A1A;fill:none;stroke-width:2"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>위치</div>
+      </div>
+      <div class="ig-tabs"><div class="ig-tab sel" style="cursor:default">▦ 그리드</div></div>
+      <div id="ig-content"></div>
     </div>
   </div>
 </div>
@@ -1061,6 +1144,7 @@
     if(!confirm("영구 삭제할까요? 이 작업은 되돌릴 수 없습니다.")) return;
     const { error } = await sb.from(t.table).delete().eq("id", t.row.id);
     if(error){ alert("삭제 실패: "+error.message); return; }
+    if(t.table==="posts") removeStorageImages(t.row.images);
     removeTrash(t.table, t.row.id);
     updateTrashBadge();
   }
@@ -1276,7 +1360,40 @@
     renderStoryList();
     renderWeekSummary();
     renderMemoBoard();
+    if(document.getElementById("ig-modal").classList.contains("open")) renderIg();
   }
+
+  /* ================= 인스타 피드 미리보기 (최신순) ================= */
+    function igSorted(){
+    return posts
+      .slice()
+      .sort((a,b)=>{
+        if(!!b.pinned !== !!a.pinned) return b.pinned ? 1 : -1;   // 상단 고정 먼저
+        return ((b.scheduled_date||"")+(b.scheduled_time||"")).localeCompare((a.scheduled_date||"")+(a.scheduled_time||""));
+      });
+  }
+  function renderIg(){
+    const list = igSorted();
+    
+    const box = document.getElementById("ig-content");
+    box.innerHTML = "";
+    if(!list.length){ box.innerHTML = '<div class="ig-empty">표시할 포스트가 없어요.</div>'; return; }
+    const grid = document.createElement("div"); grid.className = "ig-grid";
+    list.forEach(p=>{
+      const c = document.createElement("div");
+      c.className = "ig-cell";
+      const img = (p.images||[])[0];
+      c.innerHTML = (img ? `<img src="${escapeHtml(img)}" loading="lazy" alt="">` : `<div class="ig-txt">${escapeHtml((p.caption||"").slice(0,60))}</div>`)
+        + ((p.post_type==="reels") ? '<span class="ig-badge">▶</span>' : ((p.images||[]).length>1 ? '<span class="ig-badge">❐</span>' : ''))
+        + (p.pinned ? '<span class="ig-pin">📌</span>' : '');
+      c.addEventListener("click", ()=>{ closeModal("ig-modal"); openPostPreview(p); });
+      grid.appendChild(c);
+    });
+    box.appendChild(grid);
+  }
+  document.getElementById("open-ig-btn").addEventListener("click", ()=>{ renderIg(); openModal("ig-modal"); });
+  document.getElementById("ig-close-btn").addEventListener("click", ()=> closeModal("ig-modal"));
+  document.getElementById("ig-modal").addEventListener("click", e=>{ if(e.target.id==="ig-modal") closeModal("ig-modal"); });
 
   /* ================= 뷰 전환 (피드/스토리) ================= */
   function switchView(view){
@@ -1498,6 +1615,7 @@
     document.getElementById("post-date").value = dateStr || todayStr();
     document.getElementById("post-time").value = "";
     document.getElementById("post-caption").value = "";
+    document.getElementById("post-pinned").checked = false;
     setStatusSelect("planned");
     document.getElementById("post-delete-btn").style.display = "none";
     setLastEdit("post-last-edit", null);
@@ -1515,6 +1633,7 @@
     document.getElementById("post-date").value = p.scheduled_date;
     document.getElementById("post-time").value = (p.scheduled_time || "").slice(0,5);
     document.getElementById("post-caption").value = p.caption || "";
+    document.getElementById("post-pinned").checked = !!p.pinned;
     setStatusSelect(p.status || "planned");
     document.getElementById("post-delete-btn").style.display = isOwner ? "" : "none";
     setLastEdit("post-last-edit", p);
@@ -1525,13 +1644,42 @@
   document.getElementById("add-post-btn").addEventListener("click", ()=> openPostModalForNew());
   document.getElementById("post-cancel-btn").addEventListener("click", ()=> closeModal("post-modal"));
 
+  /* ================= 이미지 압축 / 저장소 정리 ================= */
+  const IMG_MAX_W = 1080, IMG_QUALITY = 0.85;
+  function compressImage(file){
+    return new Promise(resolve=>{
+      if(!/^image\/(jpeg|png|webp)$/.test(file.type)){ resolve({ blob:file, ext:(file.name.split(".").pop()||"jpg").toLowerCase() }); return; }
+      const url = URL.createObjectURL(file);
+      const im = new Image();
+      im.onload = ()=>{
+        URL.revokeObjectURL(url);
+        const scale = Math.min(1, IMG_MAX_W / im.naturalWidth);
+        const w = Math.round(im.naturalWidth*scale), h = Math.round(im.naturalHeight*scale);
+        const cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+        const ctx = cv.getContext("2d");
+        ctx.fillStyle = "#fff"; ctx.fillRect(0,0,w,h);
+        ctx.drawImage(im,0,0,w,h);
+        cv.toBlob(b=>{
+          if(b && b.size < file.size) resolve({ blob:b, ext:"jpg" });
+          else resolve({ blob:file, ext:(file.name.split(".").pop()||"jpg").toLowerCase() });
+        }, "image/jpeg", IMG_QUALITY);
+      };
+      im.onerror = ()=>{ URL.revokeObjectURL(url); resolve({ blob:file, ext:(file.name.split(".").pop()||"jpg").toLowerCase() }); };
+      im.src = url;
+    });
+  }
+  function removeStorageImages(urls){
+    const paths = (urls||[]).map(u=>{ const i = String(u).indexOf("/post-images/"); return i<0 ? null : decodeURIComponent(String(u).slice(i+13).split("?")[0]); }).filter(Boolean);
+    if(paths.length){ try{ sb.storage.from("post-images").remove(paths); }catch(e){} }
+  }
+
   async function resolveImageUrls(){
     const urls = [];
     for(const item of imageItems){
       if(item.kind === "existing"){ urls.push(item.url); continue; }
-      const ext = (item.file.name.split(".").pop() || "jpg").toLowerCase();
-      const path = `${Date.now()}_${Math.random().toString(36).slice(2,8)}.${ext}`;
-      const { error } = await sb.storage.from("post-images").upload(path, item.file, { upsert:false });
+      const comp = await compressImage(item.file);
+      const path = `${Date.now()}_${Math.random().toString(36).slice(2,8)}.${comp.ext}`;
+      const { error } = await sb.storage.from("post-images").upload(path, comp.blob, { upsert:false });
       if(error){ alert("이미지 업로드 실패: "+error.message); throw error; }
       const { data } = sb.storage.from("post-images").getPublicUrl(path);
       urls.push(data.publicUrl);
@@ -1554,16 +1702,23 @@
     try{ images = await resolveImageUrls(); }
     catch(err){ return; }
 
+    const pinned = document.getElementById("post-pinned").checked;
+    if(pinned && posts.filter(x=> x.pinned && x.id!==editingPostId).length >= 3){
+      alert("상단 고정은 최대 3개까지 가능해요. 다른 포스트의 고정을 먼저 해제해 주세요.");
+      return;
+    }
     if(editingPostId){
+      const oldPost = posts.find(x=>x.id===editingPostId);
       const post_type = selectedPostType;
-      const row = Object.assign({ id: editingPostId, images, caption, scheduled_date: date, scheduled_time: time, status, post_type }, stamp);
+      const row = Object.assign({ id: editingPostId, images, caption, scheduled_date: date, scheduled_time: time, status, post_type, pinned }, stamp);
       const { error } = await sb.from("posts").update({
-        images, caption, scheduled_date: date, scheduled_time: time, status, post_type, ...stamp
+        images, caption, scheduled_date: date, scheduled_time: time, status, post_type, pinned, ...stamp
       }).eq("id", editingPostId);
       if(error){ alert("수정 실패: "+error.message); return; }
+      if(oldPost) removeStorageImages((oldPost.images||[]).filter(u=> !images.includes(u)));
       upsertLocal(posts, row);
     } else {
-      const row = Object.assign({ id: uidP(), images, caption, scheduled_date: date, scheduled_time: time, status, post_type: selectedPostType }, stamp);
+      const row = Object.assign({ id: uidP(), images, caption, scheduled_date: date, scheduled_time: time, status, post_type: selectedPostType, pinned }, stamp);
       const { error } = await sb.from("posts").insert(row);
       if(error){ alert("저장 실패: "+error.message); return; }
       upsertLocal(posts, row);
@@ -2266,7 +2421,7 @@
       const active = [];
       (rows||[]).forEach(r=>{
         if(!r.deleted_at){ active.push(r); return; }
-        if(new Date(r.deleted_at).getTime() < cutoff){ purge.push({ table, id:r.id }); return; }
+        if(new Date(r.deleted_at).getTime() < cutoff){ purge.push({ table, id:r.id, images:r.images }); return; }
         trash.push({ table, row:r });
       });
       return active;
@@ -2275,7 +2430,7 @@
     events = split("events", eventsRes.data);
     stories = split("stories", storiesRes.data);
     memos = split("cc_memos", memosRes.data);
-    purge.forEach(p=> sb.from(p.table).delete().eq("id", p.id));
+    purge.forEach(p=>{ sb.from(p.table).delete().eq("id", p.id); if(p.table==="posts") removeStorageImages(p.images); });
     updateTrashBadge();
     render();
   }
