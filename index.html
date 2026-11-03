@@ -294,6 +294,42 @@
   .week-summary-item-title{ flex:1; font-size:13px; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .week-summary-item-due{ font-size:11px; color:var(--ink-faint); flex-shrink:0; }
 
+  /* ---------- 스토리 상세(미리보기) 모달 ---------- */
+  .sd-badges{ display:flex; align-items:center; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
+  .sd-status{ font-size:11.5px; padding:2px 9px; border-radius:999px; border:1px solid var(--line-strong); color:var(--ink-soft); }
+  .sd-title{ font-size:18px; font-weight:700; line-height:1.4; margin-bottom:6px; word-break:break-word; }
+  .sd-campaign{ font-size:13px; color:var(--ink-soft); margin-bottom:6px; }
+  .sd-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px 20px; padding:16px 0; margin-top:14px; border-top:1px solid var(--line); }
+  .sd-grid .sd-full{ grid-column:1 / -1; }
+  .sd-label{ font-size:11.5px; color:var(--ink-faint); margin-bottom:4px; }
+  .sd-value{ font-size:14px; font-weight:600; word-break:break-word; }
+  .sd-value a{ color:inherit; text-decoration:underline; }
+  .sd-box{ background:var(--bg); border-radius:var(--radius); padding:12px 14px; font-size:13.5px; line-height:1.65; white-space:pre-wrap; word-break:break-word; font-weight:400; }
+  .sd-extra-line{ font-size:13.5px; font-weight:500; margin-bottom:4px; }
+
+  /* ---------- v3: 수정자 / 휴지통 / 필터 / 상태버튼 ---------- */
+  .last-edit{ font-size:11.5px; color:var(--ink-faint); margin-top:14px; min-height:0; }
+  .last-edit:empty{ display:none; }
+  #story-filter-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+  .story-status-btn{
+    font-size:11.5px; padding:3px 10px; border-radius:999px; border:1px solid var(--line-strong);
+    color:var(--ink-soft); background:var(--surface); flex-shrink:0; cursor:pointer; white-space:nowrap;
+  }
+  .story-status-btn:hover{ border-color:var(--ink); color:var(--ink); }
+  .story-status-btn.posted{ background:var(--accent-posted); border-color:var(--accent-posted); color:#fff; }
+  .trash-note{ font-size:12px; color:var(--ink-faint); margin-bottom:12px; }
+  .trash-list{ display:flex; flex-direction:column; gap:8px; max-height:56vh; overflow-y:auto; }
+  .trash-row{ display:flex; align-items:center; gap:12px; padding:10px 12px; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); }
+  .trash-kind{ font-size:11px; padding:2px 8px; border-radius:999px; border:1px solid var(--line-strong); color:var(--ink-soft); flex-shrink:0; }
+  .trash-main{ flex:1; min-width:0; }
+  .trash-title{ font-size:13.5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .trash-meta{ font-size:11px; color:var(--ink-faint); margin-top:2px; }
+  .trash-actions{ display:flex; gap:6px; flex-shrink:0; }
+  .trash-actions button{ font-size:12px; padding:4px 10px; border:1px solid var(--line-strong); border-radius:var(--radius); color:var(--ink); }
+  .trash-actions button:hover{ border-color:var(--ink); }
+  .trash-actions .trash-purge{ color:var(--danger); }
+  .name-hint{ font-size:12.5px; color:var(--ink-soft); margin-bottom:12px; line-height:1.55; }
+
   /* ---------- 메모 패널 ---------- */
   .memo-panel{
     background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px;
@@ -397,11 +433,18 @@
   }
   .preview-header{ display:flex; align-items:center; gap:10px; padding:16px 18px; border-bottom:1px solid var(--line); }
   .preview-avatar{
-    width:32px; height:32px; border-radius:50%; background:var(--ink); color:var(--bg);
-    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0;
+    width:32px; height:32px; border-radius:50%; border:1px solid var(--line);
+    background:#fff url("data:image/jpeg;base64,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") center/cover no-repeat; flex-shrink:0;
   }
   .preview-username{ font-size:13px; font-weight:700; }
-  .preview-body{ padding:16px 18px; overflow-y:auto; flex:1; min-height:0; }
+  .preview-body{
+    padding:16px 18px 16px 36px; overflow-y:auto; flex:1; min-height:0;
+    scrollbar-width:thin; scrollbar-color:#E4E2DC transparent;
+  }
+  .preview-body::-webkit-scrollbar{ width:4px; }
+  .preview-body::-webkit-scrollbar-track{ background:transparent; }
+  .preview-body::-webkit-scrollbar-thumb{ background:#E4E2DC; border-radius:4px; }
+  .preview-body::-webkit-scrollbar-button{ display:none; width:0; height:0; }
   .preview-caption{ font-size:13.5px; white-space:pre-wrap; word-break:break-word; margin-bottom:10px; }
   .preview-hashtags{ font-size:13px; color:var(--accent-ready); word-break:break-word; }
   .preview-meta{
@@ -409,9 +452,8 @@
     font-size:12px; color:var(--ink-faint);
   }
   .preview-actions{
-    display:flex; gap:10px; padding:14px 18px; border-top:1px solid var(--line);
+    display:flex; justify-content:flex-end; gap:10px; padding:14px 18px; border-top:1px solid var(--line);
   }
-  .preview-actions .primary-btn, .preview-actions .ghost-btn{ flex:1; text-align:center; }
   .preview-close{
     position:absolute; top:10px; right:10px; width:28px; height:28px; border-radius:50%;
     background:rgba(0,0,0,0.5); color:#fff; font-size:16px; z-index:2; display:flex;
@@ -447,6 +489,8 @@
   <div class="top">
     <div class="brand-title">📷 Content Calendar</div>
     <div class="top-actions">
+      <button type="button" class="link-btn" id="editor-name-btn" title="작성자 이름 변경"></button>
+      <button type="button" class="link-btn" id="open-trash-btn">휴지통<span id="trash-count"></span></button>
       <button id="add-event-btn" class="outline-btn owner-only view-only-feed">+ 일정</button>
       <button id="add-post-btn" class="primary-btn owner-only view-only-feed">+ 새 포스트</button>
       <button id="add-story-btn" class="primary-btn owner-only view-only-story">+ 스토리</button>
@@ -476,6 +520,7 @@
         <div class="status-legend view-only-story view-hide" id="story-legend">
           <span><i class="legend-dot" id="story-legend-branding-dot"></i>브랜딩</span>
           <span><i class="legend-dot" id="story-legend-marketing-dot"></i>마케팅</span>
+          <span><i class="legend-dot" id="story-legend-offline-dot"></i>오프라인</span>
         </div>
       </div>
 
@@ -490,6 +535,7 @@
       </div>
 
       <div id="story-view" class="view-only-story view-hide">
+        <div id="story-filter-row"></div>
         <div class="story-list" id="story-list"></div>
       </div>
 
@@ -517,12 +563,27 @@
         <label class="field-label">내용</label>
         <textarea id="memo-content" rows="5"></textarea>
       </div>
+      <div class="last-edit" id="memo-last-edit"></div>
       <div class="modal-actions">
         <button type="button" class="danger-btn" id="memo-delete-btn" style="display:none;">삭제</button>
         <button type="button" class="ghost-btn" id="memo-cancel-btn">취소</button>
         <button type="submit" class="primary-btn">저장</button>
       </div>
     </form>
+  </div>
+</div>
+
+<!-- ===== Story detail (preview) modal ===== -->
+<div class="modal-overlay" id="story-detail-modal">
+  <div class="modal-box wide">
+    <div class="modal-title">스토리 상세</div>
+    <div id="story-detail-body"></div>
+    <div class="last-edit" id="story-detail-last-edit"></div>
+    <div class="modal-actions">
+      <button type="button" class="ghost-btn" id="story-detail-close-btn">닫기</button>
+      <button type="button" class="outline-btn" id="story-detail-clone-btn">복제</button>
+      <button type="button" class="primary-btn" id="story-detail-edit-btn">수정</button>
+    </div>
   </div>
 </div>
 
@@ -573,6 +634,7 @@
           <div class="status-opt" data-status="posted">업로드완료</div>
         </div>
       </div>
+      <div class="last-edit" id="story-last-edit"></div>
       <div class="modal-actions">
         <button type="button" class="danger-btn owner-only" id="story-delete-btn" style="display:none;">삭제</button>
         <button type="button" class="ghost-btn" id="story-cancel-btn">취소</button>
@@ -621,6 +683,7 @@
           <div class="status-opt" data-status="posted">업로드완료</div>
         </div>
       </div>
+      <div class="last-edit" id="post-last-edit"></div>
       <div class="modal-actions">
         <button type="button" class="danger-btn owner-only" id="post-delete-btn" style="display:none;">삭제</button>
         <button type="button" class="ghost-btn" id="post-cancel-btn">취소</button>
@@ -662,6 +725,7 @@
           <input type="text" id="event-color-text" value="#1A1A1A">
         </div>
       </div>
+      <div class="last-edit" id="event-last-edit"></div>
       <div class="modal-actions">
         <button type="button" class="danger-btn owner-only" id="event-delete-btn" style="display:none;">삭제</button>
         <button type="button" class="ghost-btn" id="event-cancel-btn">취소</button>
@@ -688,7 +752,7 @@
       </div>
       <div class="preview-side">
         <div class="preview-header">
-          <div class="preview-avatar">F</div>
+          <div class="preview-avatar" role="img" aria-label="folnua_official"></div>
           <div class="preview-username">folnua_official</div>
         </div>
         <div class="preview-body">
@@ -698,15 +762,46 @@
         <div class="preview-meta">
           <span class="status-badge" id="preview-status-badge"></span>
           <span id="preview-date"></span>
+          <span id="preview-last-edit"></span>
         </div>
         <div class="preview-actions">
-          <button type="button" class="outline-btn owner-only" id="preview-edit-btn">수정</button>
           <button type="button" class="ghost-btn" id="preview-close-btn">닫기</button>
+          <button type="button" class="primary-btn owner-only" id="preview-edit-btn">수정</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- ===== 작성자 이름 modal ===== -->
+<div class="modal-overlay" id="name-modal">
+  <div class="modal-box">
+    <div class="modal-title">작성자 이름</div>
+    <form id="name-form">
+      <div class="name-hint">수정·삭제 기록의 "마지막 수정자"로 표시돼요.<br>이 브라우저에 저장되어 다음부터는 다시 묻지 않아요.</div>
+      <div class="field-row">
+        <input type="text" id="name-input" maxlength="20" placeholder="예: 수진" required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="ghost-btn" id="name-cancel-btn">취소</button>
+        <button type="submit" class="primary-btn">확인</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== 휴지통 modal ===== -->
+<div class="modal-overlay" id="trash-modal">
+  <div class="modal-box wide">
+    <div class="modal-title">휴지통</div>
+    <div class="trash-note">삭제한 항목은 7일 동안 보관되며, 이후 자동으로 완전히 삭제돼요.</div>
+    <div class="trash-list" id="trash-list"></div>
+    <div class="modal-actions">
+      <button type="button" class="ghost-btn" id="trash-close-btn">닫기</button>
+    </div>
+  </div>
+</div>
+
 
 <script>
 (function(){
@@ -773,13 +868,168 @@
   function uidM(){ return "m" + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
   function openModal(id){ document.getElementById(id).classList.add("open"); }
-  function closeModal(id){ document.getElementById(id).classList.remove("open"); }
+  let nameResolver = null;
+  function closeModal(id){
+    document.getElementById(id).classList.remove("open");
+    if(id==="name-modal" && nameResolver){ const r=nameResolver; nameResolver=null; r(null); }
+  }
 
   /* ESC 키로 열려 있는 모달 닫기 */
   document.addEventListener("keydown", e=>{
     if(e.key !== "Escape") return;
+    const nm = document.getElementById("name-modal");
+    if(nm.classList.contains("open")){ closeModal("name-modal"); return; }
     document.querySelectorAll(".modal-overlay.open").forEach(m=> closeModal(m.id));
   });
+
+  /* ================= 작성자 이름 / 마지막 수정 / 휴지통 ================= */
+  const EDITOR_KEY = "cc_editor_name_v1";
+  let editorMem = "";
+  function getEditorName(){
+    try{ const v = (localStorage.getItem(EDITOR_KEY)||"").trim(); if(v) return v; }catch(e){}
+    return editorMem;
+  }
+  function setEditorName(n){
+    editorMem = n;
+    try{ localStorage.setItem(EDITOR_KEY, n); }catch(e){}
+    updateEditorBtn();
+  }
+  function updateEditorBtn(){
+    const n = getEditorName();
+    document.getElementById("editor-name-btn").textContent = n ? ("작성자: " + n) : "작성자 설정";
+  }
+  function requireEditor(){
+    const n = getEditorName();
+    if(n) return Promise.resolve(n);
+    return new Promise(resolve=>{
+      nameResolver = resolve;
+      document.getElementById("name-input").value = "";
+      openModal("name-modal");
+      setTimeout(()=> document.getElementById("name-input").focus(), 30);
+    });
+  }
+  document.getElementById("name-form").addEventListener("submit", e=>{
+    e.preventDefault();
+    const v = document.getElementById("name-input").value.trim();
+    if(!v) return;
+    setEditorName(v);
+    const r = nameResolver; nameResolver = null;
+    closeModal("name-modal");
+    if(r) r(v);
+  });
+  document.getElementById("name-cancel-btn").addEventListener("click", ()=> closeModal("name-modal"));
+  document.getElementById("editor-name-btn").addEventListener("click", ()=>{
+    nameResolver = null;
+    document.getElementById("name-input").value = getEditorName();
+    openModal("name-modal");
+    setTimeout(()=> document.getElementById("name-input").select(), 30);
+  });
+  updateEditorBtn();
+
+  function stampFields(editor){ return { updated_by: editor, updated_at: new Date().toISOString() }; }
+  function fmtStamp(iso){
+    const d = new Date(iso);
+    if(isNaN(d)) return "";
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+  function lastEditText(row){
+    if(!row || (!row.updated_by && !row.updated_at)) return "";
+    return "마지막 수정 · " + (row.updated_by || "알 수 없음") + (row.updated_at ? " · " + fmtStamp(row.updated_at) : "");
+  }
+  function setLastEdit(elId, row){
+    const el = document.getElementById(elId);
+    if(el) el.textContent = lastEditText(row);
+  }
+
+  /* ----- 휴지통 (soft delete, 7일 보관) ----- */
+  const TRASH_DAYS = 7;
+  const TRASH_KIND = { posts:"피드", events:"일정", stories:"스토리", cc_memos:"메모" };
+  let trash = []; // { table, row }
+  const ARR_OF = { posts:()=>posts, events:()=>events, stories:()=>stories, cc_memos:()=>memos };
+
+  function upsertTrash(table, row){
+    const i = trash.findIndex(t=> t.table===table && t.row.id===row.id);
+    if(i>-1) trash[i].row = row; else trash.push({ table, row });
+  }
+  function removeTrash(table, id){
+    const i = trash.findIndex(t=> t.table===table && t.row.id===id);
+    if(i>-1) trash.splice(i,1);
+  }
+  function trashDaysLeft(row){
+    const ms = new Date(row.deleted_at).getTime() + TRASH_DAYS*86400000 - Date.now();
+    return Math.max(0, Math.ceil(ms/86400000));
+  }
+  function trashTitle(t){
+    const r = t.row;
+    if(t.table==="posts") return ((r.caption||"").split("\n")[0] || "(캡션 없음)") + " · " + r.scheduled_date;
+    if(t.table==="events") return (r.title||"") + " · " + r.start_date + (r.end_date && r.end_date!==r.start_date ? " ~ " + r.end_date.slice(5) : "");
+    if(t.table==="stories") return (r.title||"") + " · " + r.scheduled_date + " " + (r.scheduled_time||"").slice(0,5);
+    return (r.content||"").split("\n")[0] || "(내용 없음)";
+  }
+  function updateTrashBadge(){
+    const el = document.getElementById("trash-count");
+    if(el) el.textContent = trash.length ? " " + trash.length : "";
+    if(document.getElementById("trash-modal").classList.contains("open")) renderTrash();
+  }
+  function renderTrash(){
+    const wrap = document.getElementById("trash-list");
+    wrap.innerHTML = "";
+    if(trash.length===0){
+      wrap.innerHTML = `<div class="story-empty">휴지통이 비어 있어요.</div>`;
+      return;
+    }
+    trash.slice().sort((a,b)=> (b.row.deleted_at||"").localeCompare(a.row.deleted_at||"")).forEach(t=>{
+      const row = document.createElement("div");
+      row.className = "trash-row";
+      row.innerHTML = `
+        <span class="trash-kind">${TRASH_KIND[t.table]}</span>
+        <div class="trash-main">
+          <div class="trash-title">${escapeHtml(trashTitle(t))}</div>
+          <div class="trash-meta">${escapeHtml(t.row.updated_by||"알 수 없음")} · ${fmtStamp(t.row.deleted_at)} 삭제 · ${trashDaysLeft(t.row)}일 후 완전 삭제</div>
+        </div>
+        <div class="trash-actions">
+          <button type="button" class="trash-restore">복원</button>
+          <button type="button" class="trash-purge">영구삭제</button>
+        </div>`;
+      row.querySelector(".trash-restore").addEventListener("click", ()=> restoreItem(t));
+      row.querySelector(".trash-purge").addEventListener("click", ()=> purgeItem(t));
+      wrap.appendChild(row);
+    });
+  }
+  async function softDelete(table, id){
+    const editor = await requireEditor();
+    if(!editor) return false;
+    const patch = Object.assign({ deleted_at: new Date().toISOString() }, stampFields(editor));
+    const { error } = await sb.from(table).update(patch).eq("id", id);
+    if(error){ alert("삭제 실패: "+error.message); return false; }
+    const arr = ARR_OF[table]();
+    const row = arr.find(x=>x.id===id);
+    removeLocal(arr, id);
+    if(row) upsertTrash(table, Object.assign({}, row, patch));
+    updateTrashBadge();
+    return true;
+  }
+  async function restoreItem(t){
+    const editor = await requireEditor();
+    if(!editor) return;
+    const patch = Object.assign({ deleted_at: null }, stampFields(editor));
+    const { error } = await sb.from(t.table).update(patch).eq("id", t.row.id);
+    if(error){ alert("복원 실패: "+error.message); return; }
+    removeTrash(t.table, t.row.id);
+    upsertLocal(ARR_OF[t.table](), Object.assign({}, t.row, patch));
+    updateTrashBadge();
+    render();
+  }
+  async function purgeItem(t){
+    if(!confirm("영구 삭제할까요? 이 작업은 되돌릴 수 없습니다.")) return;
+    const { error } = await sb.from(t.table).delete().eq("id", t.row.id);
+    if(error){ alert("삭제 실패: "+error.message); return; }
+    removeTrash(t.table, t.row.id);
+    updateTrashBadge();
+  }
+  document.getElementById("open-trash-btn").addEventListener("click", ()=>{ renderTrash(); openModal("trash-modal"); });
+  document.getElementById("trash-close-btn").addEventListener("click", ()=> closeModal("trash-modal"));
+
 
   function readableTextColor(hex){
     if(!hex) return "#fff";
@@ -1125,6 +1375,7 @@
     previewPost = p;
     previewIndex = 0;
     renderPreview();
+    document.getElementById("preview-last-edit").textContent = lastEditText(p) ? "· " + lastEditText(p).replace("마지막 수정 · ","수정 ") : "";
     openModal("post-preview-modal");
   }
 
@@ -1198,6 +1449,7 @@
     document.getElementById("post-hashtags").value = "";
     setStatusSelect("planned");
     document.getElementById("post-delete-btn").style.display = "none";
+    setLastEdit("post-last-edit", null);
     setPostFormEnabled(true);
     openModal("post-modal");
   }
@@ -1214,6 +1466,7 @@
     document.getElementById("post-hashtags").value = p.hashtags || "";
     setStatusSelect(p.status || "planned");
     document.getElementById("post-delete-btn").style.display = isOwner ? "" : "none";
+    setLastEdit("post-last-edit", p);
     setPostFormEnabled(isOwner);
     openModal("post-modal");
   }
@@ -1238,6 +1491,9 @@
   document.getElementById("post-form").addEventListener("submit", async e=>{
     e.preventDefault();
     if(!isOwner) return;
+    const editor = await requireEditor();
+    if(!editor) return;
+    const stamp = stampFields(editor);
     const date = document.getElementById("post-date").value;
     const time = document.getElementById("post-time").value || null;
     const caption = document.getElementById("post-caption").value.trim();
@@ -1249,14 +1505,14 @@
     catch(err){ return; }
 
     if(editingPostId){
-      const row = { id: editingPostId, images, caption, hashtags, scheduled_date: date, scheduled_time: time, status };
+      const row = Object.assign({ id: editingPostId, images, caption, hashtags, scheduled_date: date, scheduled_time: time, status }, stamp);
       const { error } = await sb.from("posts").update({
-        images, caption, hashtags, scheduled_date: date, scheduled_time: time, status
+        images, caption, hashtags, scheduled_date: date, scheduled_time: time, status, ...stamp
       }).eq("id", editingPostId);
       if(error){ alert("수정 실패: "+error.message); return; }
       upsertLocal(posts, row);
     } else {
-      const row = { id: uidP(), images, caption, hashtags, scheduled_date: date, scheduled_time: time, status };
+      const row = Object.assign({ id: uidP(), images, caption, hashtags, scheduled_date: date, scheduled_time: time, status }, stamp);
       const { error } = await sb.from("posts").insert(row);
       if(error){ alert("저장 실패: "+error.message); return; }
       upsertLocal(posts, row);
@@ -1267,10 +1523,8 @@
 
   document.getElementById("post-delete-btn").addEventListener("click", async ()=>{
     if(!editingPostId) return;
-    if(!confirm("삭제할까요? 삭제 후에는 복구할 수 없습니다.")) return;
-    const { error } = await sb.from("posts").delete().eq("id", editingPostId);
-    if(error){ alert("삭제 실패: "+error.message); return; }
-    removeLocal(posts, editingPostId);
+    if(!confirm("삭제할까요? 휴지통으로 이동하며 7일 뒤 완전히 삭제됩니다.")) return;
+    if(!(await softDelete("posts", editingPostId))) return;
     render();
     closeModal("post-modal");
   });
@@ -1378,6 +1632,7 @@
     colorPicker.value = "#1A1A1A";
     colorText.value = "#1A1A1A";
     document.getElementById("event-delete-btn").style.display = "none";
+    setLastEdit("event-last-edit", null);
     setEventFormEnabled(true);
     openModal("event-modal");
   }
@@ -1395,6 +1650,7 @@
     colorText.value = c.toUpperCase();
     if(!isOwner || !ev.category) setManualColorEnabled(true);
     document.getElementById("event-delete-btn").style.display = isOwner ? "" : "none";
+    setLastEdit("event-last-edit", ev);
     setEventFormEnabled(isOwner);
     openModal("event-modal");
   }
@@ -1405,6 +1661,9 @@
   document.getElementById("event-form").addEventListener("submit", async e=>{
     e.preventDefault();
     if(!isOwner) return;
+    const editor = await requireEditor();
+    if(!editor) return;
+    const stamp = stampFields(editor);
     const title = document.getElementById("event-title").value.trim();
     let start = document.getElementById("event-start").value;
     let end = document.getElementById("event-end").value;
@@ -1413,12 +1672,12 @@
     const color = category ? categoryColors[category] : colorText.value;
 
     if(editingEventId){
-      const row = { id: editingEventId, title, start_date:start, end_date:end, color, category };
-      const { error } = await sb.from("events").update({ title, start_date:start, end_date:end, color, category }).eq("id", editingEventId);
+      const row = Object.assign({ id: editingEventId, title, start_date:start, end_date:end, color, category }, stamp);
+      const { error } = await sb.from("events").update({ title, start_date:start, end_date:end, color, category, ...stamp }).eq("id", editingEventId);
       if(error){ alert("수정 실패: "+error.message); return; }
       upsertLocal(events, row);
     } else {
-      const row = { id: uidE(), title, start_date:start, end_date:end, color, category };
+      const row = Object.assign({ id: uidE(), title, start_date:start, end_date:end, color, category }, stamp);
       const { error } = await sb.from("events").insert(row);
       if(error){ alert("저장 실패: "+error.message); return; }
       upsertLocal(events, row);
@@ -1429,10 +1688,8 @@
 
   document.getElementById("event-delete-btn").addEventListener("click", async ()=>{
     if(!editingEventId) return;
-    if(!confirm("삭제할까요? 삭제 후에는 복구할 수 없습니다.")) return;
-    const { error } = await sb.from("events").delete().eq("id", editingEventId);
-    if(error){ alert("삭제 실패: "+error.message); return; }
-    removeLocal(events, editingEventId);
+    if(!confirm("삭제할까요? 휴지통으로 이동하며 7일 뒤 완전히 삭제됩니다.")) return;
+    if(!(await softDelete("events", editingEventId))) return;
     render();
     closeModal("event-modal");
   });
@@ -1443,7 +1700,24 @@
     return c ? c.label : (key||"");
   }
 
+  const STORY_PARTS = ["branding","marketing","offline"];
+  let storyPartFilter = "all";
+  function renderStoryFilter(){
+    const row = document.getElementById("story-filter-row");
+    if(!row) return;
+    row.innerHTML = "";
+    [{key:"all",label:"전체"}].concat(STORY_PARTS.map(k=>({key:k,label:CATEGORY_DEFS.find(c=>c.key===k).label}))).forEach(o=>{
+      const chip = document.createElement("div");
+      chip.className = "category-chip" + (storyPartFilter===o.key ? " sel" : "");
+      chip.innerHTML = (o.key==="all" ? "" : `<span class="cat-dot" style="background:${categoryColors[o.key]};"></span>`) + o.label;
+      chip.addEventListener("click", ()=>{ storyPartFilter = o.key; renderStoryList(); });
+      row.appendChild(chip);
+    });
+  }
+
   function updateStoryLegendDots(){
+    const o = document.getElementById("story-legend-offline-dot");
+    if(o) o.style.background = categoryColors.offline;
     const b = document.getElementById("story-legend-branding-dot");
     const m = document.getElementById("story-legend-marketing-dot");
     if(b) b.style.background = categoryColors.branding;
@@ -1454,6 +1728,7 @@
     const year = curMonth.getFullYear(), month = curMonth.getMonth();
     const map = {};
     stories.forEach(s=>{
+      if(storyPartFilter!=="all" && s.part!==storyPartFilter) return;
       const d = new Date(s.scheduled_date + "T00:00:00");
       if(d.getFullYear()===year && d.getMonth()===month){
         (map[s.scheduled_date] = map[s.scheduled_date] || []).push(s);
@@ -1467,10 +1742,11 @@
     const wrap = document.getElementById("story-list");
     if(!wrap) return;
     wrap.innerHTML = "";
+    renderStoryFilter();
     const byDate = storiesByDateInMonth();
     const dates = Object.keys(byDate).sort();
     if(dates.length === 0){
-      wrap.innerHTML = `<div class="story-empty">이번 달 등록된 스토리가 없어요.</div>`;
+      wrap.innerHTML = `<div class="story-empty">${storyPartFilter==="all" ? "이번 달 등록된 스토리가 없어요." : "이번 달 해당 파트의 스토리가 없어요."}</div>`;
       return;
     }
     dates.forEach(dateStr=>{
@@ -1500,10 +1776,21 @@
             ${extraBadges.length ? `<div class="story-extras-line">${extraBadges.join("")}</div>` : ""}
             ${s.notes ? `<div class="story-notes">${escapeHtml(s.notes)}</div>` : ""}
           </div>
-          <span class="story-status-dot" style="background:${s.status==='posted' ? 'var(--accent-posted)' : 'var(--accent-plan)'};" title="${STORY_STATUS_LABEL[s.status]||""}"></span>
+          <button type="button" class="story-status-btn ${s.status==='posted' ? 'posted' : ''}" title="클릭해서 상태 변경">${STORY_STATUS_LABEL[s.status==='posted' ? 'posted' : 'planned']}</button>
         `;
+        row.querySelector(".story-status-btn").addEventListener("click", async ev=>{
+          ev.stopPropagation();
+          const editor = await requireEditor();
+          if(!editor) return;
+          const status = s.status==='posted' ? 'planned' : 'posted';
+          const stamp = stampFields(editor);
+          const { error } = await sb.from("stories").update({ status, ...stamp }).eq("id", s.id);
+          if(error){ alert("상태 변경 실패: "+error.message); return; }
+          upsertLocal(stories, Object.assign({}, s, { status }, stamp));
+          render();
+        });
         if(s.notes) row.title = "비고: " + s.notes;
-        row.addEventListener("click", ()=> openStoryModalForEdit(s));
+        row.addEventListener("click", ()=> openStoryDetail(s));
         rows.appendChild(row);
       });
       group.appendChild(rows);
@@ -1520,7 +1807,7 @@
   function renderStoryPartChips(){
     const row = document.getElementById("story-part-row");
     row.innerHTML = "";
-    ["branding","marketing"].forEach(key=>{
+    STORY_PARTS.forEach(key=>{
       const def = CATEGORY_DEFS.find(c=>c.key===key);
       const chip = document.createElement("div");
       chip.className = "category-chip" + (selectedStoryPart===key ? " sel" : "");
@@ -1598,6 +1885,7 @@
     renderStoryExtraChips();
     setStoryStatusSelect("planned");
     document.getElementById("story-delete-btn").style.display = "none";
+    setLastEdit("story-last-edit", null);
     setStoryFormEnabled(true);
     openModal("story-modal");
   }
@@ -1623,9 +1911,71 @@
     renderStoryExtraChips();
     setStoryStatusSelect(s.status || "planned");
     document.getElementById("story-delete-btn").style.display = isOwner ? "" : "none";
+    setLastEdit("story-last-edit", s);
     setStoryFormEnabled(isOwner);
     openModal("story-modal");
   }
+
+  /* ---------- 스토리 상세(미리보기) ---------- */
+  let detailStoryId = null;
+  function safeUrl(u){ return /^https?:\/\//i.test(u||"") ? u : null; }
+  function openStoryDetail(s){
+    detailStoryId = s.id;
+    const partColor = categoryColors[s.part] || "#999999";
+    const wd = WEEKDAYS[new Date(s.scheduled_date + "T00:00:00").getDay()];
+    const has = v => v !== null && v !== undefined;
+    const extras = [];
+    if(has(s.extra_link)){
+      const u = safeUrl(s.extra_link);
+      extras.push(`<div class="sd-extra-line">🔗 링크 삽입${s.extra_link ? ": " + (u ? `<a href="${escapeHtml(u)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.extra_link)}</a>` : escapeHtml(s.extra_link)) : ""}</div>`);
+    }
+    if(has(s.extra_regram)) extras.push(`<div class="sd-extra-line">🔁 리그램${s.extra_regram ? ": " + escapeHtml(s.extra_regram) : ""}</div>`);
+    if(has(s.extra_countdown)) extras.push(`<div class="sd-extra-line">⏱ 카운트다운${s.extra_countdown ? ": " + escapeHtml(s.extra_countdown) : ""}</div>`);
+    document.getElementById("story-detail-body").innerHTML = `
+      <div class="sd-badges">
+        <span class="story-part-badge" style="background:${partColor};">${escapeHtml(partLabel(s.part))}</span>
+        <span class="sd-status">${STORY_STATUS_LABEL[s.status] || STORY_STATUS_LABEL.planned}</span>
+      </div>
+      <div class="sd-title">${escapeHtml(s.title || "")}</div>
+      ${s.campaign ? `<div class="sd-campaign">${escapeHtml(s.campaign)}</div>` : ""}
+      <div class="sd-grid">
+        <div><div class="sd-label">날짜</div><div class="sd-value">${s.scheduled_date} (${wd})</div></div>
+        <div><div class="sd-label">시간</div><div class="sd-value">${(s.scheduled_time||"").slice(0,5)}</div></div>
+        <div class="sd-full"><div class="sd-label">추가 요청사항</div><div class="sd-value">${extras.length ? extras.join("") : '<span style="color:var(--ink-faint);font-weight:400;">없음</span>'}</div></div>
+        <div class="sd-full"><div class="sd-label">비고</div>${s.notes ? `<div class="sd-box">${escapeHtml(s.notes)}</div>` : '<div class="sd-value" style="color:var(--ink-faint);font-weight:400;">없음</div>'}</div>
+      </div>`;
+    setLastEdit("story-detail-last-edit", s);
+    openModal("story-detail-modal");
+  }
+  document.getElementById("story-detail-close-btn").addEventListener("click", ()=> closeModal("story-detail-modal"));
+  document.getElementById("story-detail-clone-btn").addEventListener("click", ()=>{
+    const s = stories.find(x=>x.id===detailStoryId);
+    closeModal("story-detail-modal");
+    if(!s) return;
+    openStoryModalForNew(s.scheduled_date);
+    document.getElementById("story-modal-title").textContent = "스토리 복제";
+    document.getElementById("story-time").value = (s.scheduled_time||"").slice(0,5);
+    document.getElementById("story-title").value = s.title || "";
+    document.getElementById("story-campaign").value = s.campaign || "";
+    document.getElementById("story-notes").value = s.notes || "";
+    selectedStoryPart = s.part || null;
+    renderStoryPartChips();
+    selectedStoryExtras = {
+      link: s.extra_link !== null && s.extra_link !== undefined,
+      regram: s.extra_regram !== null && s.extra_regram !== undefined,
+      countdown: s.extra_countdown !== null && s.extra_countdown !== undefined
+    };
+    document.getElementById("story-extra-link").value = s.extra_link || "";
+    document.getElementById("story-extra-regram").value = s.extra_regram || "";
+    document.getElementById("story-extra-countdown").value = s.extra_countdown || "";
+    renderStoryExtraChips();
+    setStoryStatusSelect("planned");
+  });
+  document.getElementById("story-detail-edit-btn").addEventListener("click", ()=>{
+    const s = stories.find(x=>x.id===detailStoryId);
+    closeModal("story-detail-modal");
+    if(s) openStoryModalForEdit(s);
+  });
 
   document.getElementById("add-story-btn").addEventListener("click", ()=> openStoryModalForNew());
   document.getElementById("story-cancel-btn").addEventListener("click", ()=> closeModal("story-modal"));
@@ -1633,7 +1983,10 @@
   document.getElementById("story-form").addEventListener("submit", async e=>{
     e.preventDefault();
     if(!isOwner) return;
-    if(!selectedStoryPart){ alert("담당 파트(브랜딩/마케팅)를 선택해주세요."); return; }
+    if(!selectedStoryPart){ alert("담당 파트(브랜딩/마케팅/오프라인)를 선택해주세요."); return; }
+    const editor = await requireEditor();
+    if(!editor) return;
+    const stamp = stampFields(editor);
     const date = document.getElementById("story-date").value;
     const time = document.getElementById("story-time").value;
     const title = document.getElementById("story-title").value.trim();
@@ -1646,14 +1999,14 @@
     const extra_countdown = selectedStoryExtras.countdown ? document.getElementById("story-extra-countdown").value.trim() : null;
 
     if(editingStoryId){
-      const row = { id: editingStoryId, scheduled_date:date, scheduled_time:time, title, campaign, notes, extra_link, extra_regram, extra_countdown, part, status };
+      const row = Object.assign({ id: editingStoryId, scheduled_date:date, scheduled_time:time, title, campaign, notes, extra_link, extra_regram, extra_countdown, part, status }, stamp);
       const { error } = await sb.from("stories").update({
-        scheduled_date:date, scheduled_time:time, title, campaign, notes, extra_link, extra_regram, extra_countdown, part, status
+        scheduled_date:date, scheduled_time:time, title, campaign, notes, extra_link, extra_regram, extra_countdown, part, status, ...stamp
       }).eq("id", editingStoryId);
       if(error){ alert("수정 실패: "+error.message); return; }
       upsertLocal(stories, row);
     } else {
-      const row = { id: uidS(), scheduled_date:date, scheduled_time:time, title, campaign, notes, extra_link, extra_regram, extra_countdown, part, status };
+      const row = Object.assign({ id: uidS(), scheduled_date:date, scheduled_time:time, title, campaign, notes, extra_link, extra_regram, extra_countdown, part, status }, stamp);
       const { error } = await sb.from("stories").insert(row);
       if(error){ alert("저장 실패: "+error.message); return; }
       upsertLocal(stories, row);
@@ -1664,10 +2017,8 @@
 
   document.getElementById("story-delete-btn").addEventListener("click", async ()=>{
     if(!editingStoryId) return;
-    if(!confirm("삭제할까요? 삭제 후에는 복구할 수 없습니다.")) return;
-    const { error } = await sb.from("stories").delete().eq("id", editingStoryId);
-    if(error){ alert("삭제 실패: "+error.message); return; }
-    removeLocal(stories, editingStoryId);
+    if(!confirm("삭제할까요? 휴지통으로 이동하며 7일 뒤 완전히 삭제됩니다.")) return;
+    if(!(await softDelete("stories", editingStoryId))) return;
     render();
     closeModal("story-modal");
   });
@@ -1728,7 +2079,7 @@
       box.querySelectorAll(".week-summary-item").forEach(btn=>{
         btn.addEventListener("click", ()=>{
           const s = stories.find(x=>x.id===btn.dataset.id);
-          if(s) openStoryModalForEdit(s);
+          if(s) openStoryDetail(s);
         });
       });
     }
@@ -1745,6 +2096,7 @@
     document.getElementById("memo-modal-title").textContent = "메모 추가";
     document.getElementById("memo-content").value = "";
     document.getElementById("memo-delete-btn").style.display = "none";
+    setLastEdit("memo-last-edit", null);
     openModal("memo-modal");
   }
 
@@ -1753,6 +2105,7 @@
     document.getElementById("memo-modal-title").textContent = "메모 수정";
     document.getElementById("memo-content").value = m.content || "";
     document.getElementById("memo-delete-btn").style.display = "";
+    setLastEdit("memo-last-edit", m);
     openModal("memo-modal");
   }
 
@@ -1763,13 +2116,16 @@
     e.preventDefault();
     const content = document.getElementById("memo-content").value.trim();
     if(!content) return;
+    const editor = await requireEditor();
+    if(!editor) return;
+    const stamp = stampFields(editor);
     if(editingMemoId){
-      const row = { id: editingMemoId, content };
-      const { error } = await sb.from("cc_memos").update({ content }).eq("id", editingMemoId);
+      const row = Object.assign({ id: editingMemoId, content }, stamp);
+      const { error } = await sb.from("cc_memos").update({ content, ...stamp }).eq("id", editingMemoId);
       if(error){ alert("수정 실패: "+error.message); return; }
       upsertLocal(memos, Object.assign({}, memos.find(m=>m.id===editingMemoId), row));
     } else {
-      const row = { id: uidM(), content };
+      const row = Object.assign({ id: uidM(), content }, stamp);
       const { error } = await sb.from("cc_memos").insert(row);
       if(error){ alert("저장 실패: "+error.message); return; }
       upsertLocal(memos, row);
@@ -1780,10 +2136,8 @@
 
   document.getElementById("memo-delete-btn").addEventListener("click", async ()=>{
     if(!editingMemoId) return;
-    if(!confirm("메모를 삭제할까요?")) return;
-    const { error } = await sb.from("cc_memos").delete().eq("id", editingMemoId);
-    if(error){ alert("삭제 실패: "+error.message); return; }
-    removeLocal(memos, editingMemoId);
+    if(!confirm("메모를 삭제할까요? 휴지통으로 이동하며 7일 뒤 완전히 삭제됩니다.")) return;
+    if(!(await softDelete("cc_memos", editingMemoId))) return;
     render();
     closeModal("memo-modal");
   });
@@ -1831,10 +2185,24 @@
       alert("데이터를 불러오지 못했어요. 잠시 후 새로고침해주세요.");
       return;
     }
-    posts = postsRes.data || [];
-    events = eventsRes.data || [];
-    stories = storiesRes.data || [];
-    memos = memosRes.data || [];
+    trash = [];
+    const cutoff = Date.now() - TRASH_DAYS*86400000;
+    const purge = [];
+    function split(table, rows){
+      const active = [];
+      (rows||[]).forEach(r=>{
+        if(!r.deleted_at){ active.push(r); return; }
+        if(new Date(r.deleted_at).getTime() < cutoff){ purge.push({ table, id:r.id }); return; }
+        trash.push({ table, row:r });
+      });
+      return active;
+    }
+    posts = split("posts", postsRes.data);
+    events = split("events", eventsRes.data);
+    stories = split("stories", storiesRes.data);
+    memos = split("cc_memos", memosRes.data);
+    purge.forEach(p=> sb.from(p.table).delete().eq("id", p.id));
+    updateTrashBadge();
     render();
   }
 
@@ -1847,34 +2215,36 @@
     if(idx>-1) arr.splice(idx,1);
   }
 
-  function applyRealtimeChange(arr, payload){
-    if(payload.eventType === "INSERT"){
-      upsertLocal(arr, payload.new);
-    } else if(payload.eventType === "UPDATE"){
-      upsertLocal(arr, payload.new);
-    } else if(payload.eventType === "DELETE"){
+  function applyRealtimeChange(arr, payload, table){
+    if(payload.eventType === "DELETE"){
       removeLocal(arr, payload.old.id);
+      removeTrash(table, payload.old.id);
+    } else {
+      const row = payload.new;
+      if(row.deleted_at){ removeLocal(arr, row.id); upsertTrash(table, row); }
+      else { removeTrash(table, row.id); upsertLocal(arr, row); }
     }
+    updateTrashBadge();
   }
 
   sb.channel("posts-changes")
     .on("postgres_changes", { event:"*", schema:"public", table:"posts" }, payload=>{
-      applyRealtimeChange(posts, payload);
+      applyRealtimeChange(posts, payload, "posts");
       render();
     }).subscribe();
   sb.channel("events-changes")
     .on("postgres_changes", { event:"*", schema:"public", table:"events" }, payload=>{
-      applyRealtimeChange(events, payload);
+      applyRealtimeChange(events, payload, "events");
       render();
     }).subscribe();
   sb.channel("stories-changes")
     .on("postgres_changes", { event:"*", schema:"public", table:"stories" }, payload=>{
-      applyRealtimeChange(stories, payload);
+      applyRealtimeChange(stories, payload, "stories");
       render();
     }).subscribe();
   sb.channel("cc-memos-changes")
     .on("postgres_changes", { event:"*", schema:"public", table:"cc_memos" }, payload=>{
-      applyRealtimeChange(memos, payload);
+      applyRealtimeChange(memos, payload, "cc_memos");
       render();
     }).subscribe();
 
