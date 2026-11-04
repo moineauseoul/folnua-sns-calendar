@@ -2423,8 +2423,8 @@
   function openLightbox(urls, idx){
     lbUrls = urls; lbIdx = idx || 0;
     const stage = document.getElementById("lb-stage");
-    stage.classList.remove("fit");
-    document.getElementById("lb-fit").textContent = "화면에 맞추기";
+    stage.classList.add("fit");
+    document.getElementById("lb-fit").textContent = "원본 크기로 보기";
     showLightbox();
     document.getElementById("img-lightbox").classList.add("open");
     stage.scrollTop = 0;
