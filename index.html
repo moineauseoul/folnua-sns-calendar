@@ -2265,6 +2265,7 @@
         if(s.extra_link !== null && s.extra_link !== undefined) extraBadges.push(`<span title="링크 삽입">🔗</span>`);
         if(s.extra_regram !== null && s.extra_regram !== undefined) extraBadges.push(`<span title="리그램">🔁</span>`);
         if(s.extra_countdown !== null && s.extra_countdown !== undefined) extraBadges.push(`<span title="카운트다운">⏱</span>`);
+        if((s.images||[]).length) extraBadges.push(`<span title="스토리 이미지">🖼️</span>`);
         if(s.notes) extraBadges.push(`<span title="비고">📝</span>`);
         row.innerHTML = `
           <div class="story-time">${(s.scheduled_time||"").slice(0,5)}</div>
