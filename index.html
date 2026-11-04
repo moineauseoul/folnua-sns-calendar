@@ -503,11 +503,52 @@
   .ig-post-cap{ padding:14px 16px 0; font-size:12.5px; line-height:1.6; white-space:pre-wrap; word-break:break-word; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
   .ig-post-cap b{ margin-right:6px; }
   .ig-empty{ padding:40px 16px; text-align:center; font-size:12.5px; color:var(--ink-faint); }
+  /* ===== 리치 텍스트 편집기 (굵게/기울임/밑줄/취소선 + 자주 쓰는 이모지) ===== */
+  .rx-wrap{ border:1px solid var(--line-strong,#D8D6D0); border-radius:6px; background:#fff; }
+  .rx-wrap:focus-within{ border-color:#1A1A1A; }
+  .rx-toolbar{ display:flex; align-items:center; gap:4px; padding:6px 8px; border-bottom:1px solid var(--line,#ECEAE4); }
+  .rx-btn{ width:28px; height:28px; border:1px solid transparent; background:none; border-radius:4px; cursor:pointer; font-size:13px; color:#555; font-family:inherit; display:flex; align-items:center; justify-content:center; padding:0; }
+  .rx-btn:hover{ background:#F3F1EC; color:#1A1A1A; }
+  .rx-btn.on{ background:#1A1A1A; color:#fff; }
+  .rx-sep{ width:1px; height:16px; background:var(--line,#ECEAE4); margin:0 4px; }
+  .rx-editor{ padding:10px 12px; min-height:90px; max-height:320px; overflow-y:auto; outline:none; font-size:13.5px; line-height:1.55; word-break:break-word; color:var(--ink,#1A1A1A); text-align:left; }
+  .rx-editor.rx-empty::before{ content:attr(data-ph); color:#A8A59E; pointer-events:none; }
+  .rx-wrap.rx-disabled .rx-toolbar, .rx-wrap.rx-disabled .rx-emoji-panel{ display:none; }
+  .rx-wrap.rx-disabled{ background:transparent; }
+  .rx-emoji-panel{ padding:10px 12px; border-bottom:1px solid var(--line,#ECEAE4); background:#FAF9F6; font-size:12px; }
+  .rx-emoji-list{ display:flex; flex-wrap:wrap; gap:6px; }
+  .rx-emo{ position:relative; width:34px; height:34px; font-size:19px; border:1px solid var(--line-strong,#D8D6D0); background:#fff; border-radius:6px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:inherit; padding:0; }
+  .rx-emo:hover{ background:#F3F1EC; }
+  .rx-emo.sel{ border-color:#1A1A1A; box-shadow:0 0 0 1px #1A1A1A; }
+  .rx-emo .rx-x{ position:absolute; top:-6px; right:-6px; width:16px; height:16px; border-radius:50%; background:#E03131; color:#fff; font-size:10px; line-height:16px; text-align:center; }
+  .rx-emoji-foot{ display:flex; align-items:center; gap:6px; margin-top:10px; flex-wrap:wrap; }
+  .rx-emoji-foot input.rx-emo-input{ width:110px; flex:none; padding:5px 8px; border:1px solid var(--line-strong,#D8D6D0); border-radius:4px; font-size:13px; background:#fff; }
+  .rx-mini{ padding:4px 11px; border:1px solid var(--line-strong,#D8D6D0); background:#fff; border-radius:999px; font-size:11.5px; cursor:pointer; font-family:inherit; color:#444; width:auto; }
+  .rx-mini.primary{ background:#1A1A1A; color:#fff; border-color:#1A1A1A; }
+  .rx-mini[disabled]{ opacity:.4; cursor:default; }
+  .rx-count{ margin-left:auto; color:#8A8A8A; }
+  .rx-hint{ color:#8A8A8A; margin-top:8px; line-height:1.5; }
+  .rx-view{ word-break:break-word; }
+
+  /* ===== 스토리 이미지 ===== */
+  .story-chip{ width:54px; aspect-ratio:9/16; cursor:default; }
+  .sd-thumbs{ display:flex; gap:8px; flex-wrap:wrap; }
+  .sd-thumb{ width:64px; aspect-ratio:9/16; border-radius:4px; overflow:hidden; border:1px solid var(--line); background:var(--slot-empty); cursor:zoom-in; padding:0; }
+  .sd-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .lightbox{ display:none; position:fixed; inset:0; background:rgba(20,20,20,.9); z-index:300; flex-direction:column; }
+  .lightbox.open{ display:flex; }
+  .lb-bar{ display:flex; align-items:center; justify-content:flex-end; gap:10px; padding:10px 16px; color:#fff; font-size:13px; flex-shrink:0; }
+  .lb-bar button{ background:rgba(255,255,255,.14); color:#fff; border:0; border-radius:999px; padding:5px 13px; font-size:12.5px; cursor:pointer; font-family:inherit; }
+  .lb-bar button:hover{ background:rgba(255,255,255,.28); }
+  .lb-stage{ flex:1; overflow:auto; display:flex; justify-content:center; align-items:flex-start; padding:0 16px 24px; min-height:0; }
+  .lb-stage img{ display:block; flex:none; width:auto; height:auto; max-width:none; }
+  .lb-stage.fit{ align-items:center; }
+  .lb-stage.fit img{ max-width:100%; max-height:calc(100vh - 80px); object-fit:contain; }
   .preview-body::-webkit-scrollbar{ width:4px; }
   .preview-body::-webkit-scrollbar-track{ background:transparent; }
   .preview-body::-webkit-scrollbar-thumb{ background:#E4E2DC; border-radius:4px; }
   .preview-body::-webkit-scrollbar-button{ display:none; width:0; height:0; }
-  .preview-caption{ font-size:13.5px; white-space:pre-wrap; word-break:break-word; margin-bottom:10px; }
+  .preview-caption{ font-size:13.5px; white-space:normal; word-break:break-word; margin-bottom:10px; }
   .preview-hashtags{ font-size:13px; color:var(--accent-ready); word-break:break-word; }
   .preview-meta{
     display:flex; align-items:center; gap:10px; padding:12px 18px; border-top:1px solid var(--line);
@@ -681,6 +722,14 @@
           <input type="text" id="story-extra-regram" class="story-extra-input" style="display:none;" placeholder="리그램할 계정 (예: @folnua_studio)">
           <input type="text" id="story-extra-countdown" class="story-extra-input" style="display:none;" placeholder="카운트다운 시간/내용 (예: 24시간)">
         </div>
+      </div>
+      <div class="field-row">
+        <label class="field-label">스토리 이미지 (선택 · 1080×1920 권장 · 최대 5장)</label>
+        <div class="img-drop" id="story-img-drop">
+          <div class="img-drop-label">클릭해서 선택하거나, 파일을 끌어다 놓으세요</div>
+          <input type="file" id="story-img-input" accept="image/*" multiple>
+        </div>
+        <div class="img-chip-strip" id="story-img-strip"></div>
       </div>
       <div class="field-row">
         <label class="field-label">비고 (선택)</label>
@@ -874,6 +923,16 @@
   </div>
 </div>
 
+<!-- ===== 이미지 원본 크기 보기 ===== -->
+<div class="lightbox" id="img-lightbox">
+  <div class="lb-bar">
+    <button type="button" id="lb-prev">‹</button><span id="lb-info"></span><button type="button" id="lb-next">›</button>
+    <button type="button" id="lb-fit">화면에 맞추기</button>
+    <button type="button" id="lb-close">닫기 ✕</button>
+  </div>
+  <div class="lb-stage" id="lb-stage"><img id="lb-img" alt=""></div>
+</div>
+
 <!-- ===== 브랜딩플래너 일정 (읽기 전용) modal ===== -->
 <div class="modal-overlay" id="bp-event-modal">
   <div class="modal-box wide">
@@ -982,6 +1041,203 @@
   function escapeHtml(str){
     return String(str||"").replace(/[&<>"']/g, ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
   }
+
+  /* ================= 리치 텍스트 (굵게/기울임/밑줄/취소선 + 자주 쓰는 이모지) ================= */
+  const RTE = (function(){
+    const HTML_RE = /<(b|i|u|s|strong|em|strike|del|br|div|p)[\s>\/]/i;
+    const EMOJI_KEY = "fav_emojis_v1", EMOJI_MAX = 10;
+    const EMOJI_DEFAULT = ["✅","📌","❗","⭐","🔥"];
+    const instances = [];
+    let memEmojis = null;
+
+    function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+    function looksHtml(s){ return HTML_RE.test(s||""); }
+    const MAP = { b:"b", strong:"b", i:"i", em:"i", u:"u", s:"s", strike:"s", del:"s", br:"br", div:"div", p:"div" };
+    function walk(src, dst){
+      src.childNodes.forEach(n=>{
+        if(n.nodeType===3){ dst.appendChild(document.createTextNode(n.nodeValue)); return; }
+        if(n.nodeType!==1) return;
+        const tag = n.tagName.toLowerCase();
+        if(tag==="script" || tag==="style") return;
+        const to = MAP[tag];
+        if(!to){ walk(n, dst); return; }          // 허용하지 않는 태그는 벗겨내고 내용만 유지
+        const el = document.createElement(to);
+        if(to!=="br") walk(n, el);
+        dst.appendChild(el);
+      });
+    }
+    function sanitize(html){
+      const doc = new DOMParser().parseFromString("<body>"+(html||"")+"</body>", "text/html");
+      const out = document.createElement("div");
+      walk(doc.body, out);
+      return out.innerHTML;
+    }
+    function toHtml(v){
+      if(v==null || v==="") return "";
+      v = String(v);
+      return looksHtml(v) ? sanitize(v) : esc(v).replace(/\r?\n/g,"<br>");
+    }
+    function toText(v){
+      if(!looksHtml(v)) return v||"";
+      const d = document.createElement("div");
+      d.innerHTML = sanitize(v);
+      d.querySelectorAll("br").forEach(b=> b.replaceWith("\n"));
+      d.querySelectorAll("div").forEach(b=> b.insertAdjacentText("afterend","\n"));
+      return d.textContent;
+    }
+    function trimEnd(h){ return h.replace(/(\s|<br>|<div><br><\/div>|<div><\/div>)+$/,""); }
+
+    function getEmojis(){
+      try{
+        const raw = localStorage.getItem(EMOJI_KEY);
+        if(raw){ const a = JSON.parse(raw); if(Array.isArray(a)) return a.slice(0,EMOJI_MAX); }
+      }catch(e){}
+      return memEmojis ? memEmojis.slice() : EMOJI_DEFAULT.slice();
+    }
+    function setEmojis(a){
+      memEmojis = a.slice(0,EMOJI_MAX);
+      try{ localStorage.setItem(EMOJI_KEY, JSON.stringify(memEmojis)); }catch(e){}
+      instances.forEach(i=> i.renderPanel());
+    }
+
+    function mount(ta){
+      if(!ta || ta._rx) return;
+      const wrap = document.createElement("div");
+      wrap.className = "rx-wrap";
+      wrap.innerHTML = `
+        <div class="rx-toolbar">
+          <button type="button" class="rx-btn" data-cmd="bold" title="굵게"><b>B</b></button>
+          <button type="button" class="rx-btn" data-cmd="italic" title="기울임"><i>I</i></button>
+          <button type="button" class="rx-btn" data-cmd="underline" title="밑줄"><u>U</u></button>
+          <button type="button" class="rx-btn" data-cmd="strikeThrough" title="취소선"><s>S</s></button>
+          <span class="rx-sep"></span>
+          <button type="button" class="rx-btn rx-emoji-btn" title="자주 쓰는 이모지">😀</button>
+        </div>
+        <div class="rx-emoji-panel" style="display:none;"></div>
+        <div class="rx-editor rx-empty" contenteditable="true" role="textbox" aria-multiline="true"></div>`;
+      ta.parentNode.insertBefore(wrap, ta);
+      ta.style.display = "none";
+      ta._rx = true;
+      const ed = wrap.querySelector(".rx-editor");
+      const panel = wrap.querySelector(".rx-emoji-panel");
+      ed.dataset.ph = ta.getAttribute("placeholder") || "";
+      ed.style.minHeight = (ta.dataset.minh || (ta.id==="post-caption" ? 160 : (ta.rows>=5 ? 120 : 90))) + "px";
+
+      const syncEmpty = ()=> ed.classList.toggle("rx-empty", !ed.textContent.trim());
+      Object.defineProperty(ta, "value", {
+        configurable:true,
+        get(){ const h = trimEnd(sanitize(ed.innerHTML)); return toText(h).trim() ? h : ""; },
+        set(v){ ed.innerHTML = toHtml(v); syncEmpty(); }
+      });
+      ed.addEventListener("input", syncEmpty);
+      ed.addEventListener("paste", e=>{
+        e.preventDefault();
+        const t = (e.clipboardData || window.clipboardData).getData("text/plain");
+        document.execCommand("insertText", false, t);
+      });
+      const applyDisabled = ()=>{
+        const dis = ta.hasAttribute("disabled");
+        ed.contentEditable = dis ? "false" : "true";
+        wrap.classList.toggle("rx-disabled", dis);
+      };
+      new MutationObserver(applyDisabled).observe(ta, { attributes:true, attributeFilter:["disabled"] });
+      applyDisabled();
+
+      /* 서식 버튼 */
+      let saved = null;
+      const saveRange = ()=>{
+        const sel = window.getSelection();
+        if(sel.rangeCount && ed.contains(sel.anchorNode)) saved = sel.getRangeAt(0).cloneRange();
+      };
+      ["keyup","mouseup","blur"].forEach(ev=> ed.addEventListener(ev, saveRange));
+      document.addEventListener("selectionchange", ()=>{ if(document.activeElement===ed) saveRange(); });
+      const refreshActive = ()=>{
+        wrap.querySelectorAll(".rx-btn[data-cmd]").forEach(b=>{
+          let on = false;
+          try{ on = document.activeElement===ed && document.queryCommandState(b.dataset.cmd); }catch(e){}
+          b.classList.toggle("on", !!on);
+        });
+      };
+      document.addEventListener("selectionchange", ()=>{ if(document.activeElement===ed) refreshActive(); });
+      wrap.querySelectorAll(".rx-btn[data-cmd]").forEach(btn=>{
+        btn.addEventListener("mousedown", e=> e.preventDefault());
+        btn.addEventListener("click", ()=>{
+          ed.focus();
+          document.execCommand(btn.dataset.cmd, false, null);
+          refreshActive();
+        });
+      });
+
+      /* 이모지 패널 */
+      let editMode = false, editIdx = -1;
+      function insertEmoji(em){
+        ed.focus();
+        const sel = window.getSelection();
+        if(saved){ sel.removeAllRanges(); sel.addRange(saved); }
+        else { const r = document.createRange(); r.selectNodeContents(ed); r.collapse(false); sel.removeAllRanges(); sel.addRange(r); }
+        document.execCommand("insertText", false, em);
+        saveRange(); syncEmpty();
+      }
+      function renderPanel(){
+        const list = getEmojis();
+        panel.innerHTML = `
+          <div class="rx-emoji-list"></div>
+          <div class="rx-emoji-foot">
+            <input type="text" class="rx-emo-input" maxlength="8" placeholder="이모지 입력">
+            <button type="button" class="rx-mini primary rx-emo-save"></button>
+            <button type="button" class="rx-mini rx-emo-cancel" style="display:none;">취소</button>
+            <button type="button" class="rx-mini rx-emo-edit">${editMode ? "편집 완료" : "편집"}</button>
+            <span class="rx-count">${list.length}/${EMOJI_MAX}</span>
+          </div>
+          <div class="rx-hint">${editMode ? "이모지를 누르면 수정, ✕를 누르면 삭제돼요." : "이모지를 누르면 커서 위치에 들어가요."}</div>`;
+        const box = panel.querySelector(".rx-emoji-list");
+        list.forEach((em, i)=>{
+          const b = document.createElement("button");
+          b.type = "button"; b.className = "rx-emo" + (editMode && editIdx===i ? " sel" : "");
+          b.textContent = em;
+          if(editMode){
+            const x = document.createElement("span"); x.className = "rx-x"; x.textContent = "✕";
+            x.addEventListener("click", ev=>{ ev.stopPropagation(); const a = getEmojis(); a.splice(i,1); editIdx = -1; setEmojis(a); });
+            b.appendChild(x);
+          }
+          b.addEventListener("mousedown", e=> e.preventDefault());
+          b.addEventListener("click", ()=>{
+            if(editMode){ editIdx = i; renderPanel(); const inp = panel.querySelector(".rx-emo-input"); inp.value = em; inp.focus(); }
+            else insertEmoji(em);
+          });
+          box.appendChild(b);
+        });
+        if(!list.length){ box.innerHTML = '<span style="color:#8A8A8A;">등록된 이모지가 없어요. 아래에서 추가해 주세요.</span>'; }
+        const inp = panel.querySelector(".rx-emo-input");
+        const saveBtn = panel.querySelector(".rx-emo-save");
+        const cancelBtn = panel.querySelector(".rx-emo-cancel");
+        const editing = editMode && editIdx>=0;
+        saveBtn.textContent = editing ? "수정" : "추가";
+        cancelBtn.style.display = editing ? "" : "none";
+        if(!editing && list.length>=EMOJI_MAX){ saveBtn.disabled = true; inp.disabled = true; inp.placeholder = "최대 10개"; }
+        const commit = ()=>{
+          const v = inp.value.trim();
+          if(!v) return;
+          const a = getEmojis();
+          if(editing) a[editIdx] = v; else if(a.length<EMOJI_MAX) a.push(v); else return;
+          editIdx = -1; setEmojis(a);
+        };
+        saveBtn.addEventListener("click", commit);
+        inp.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); e.stopPropagation(); commit(); } });
+        cancelBtn.addEventListener("click", ()=>{ editIdx = -1; renderPanel(); });
+        panel.querySelector(".rx-emo-edit").addEventListener("click", ()=>{ editMode = !editMode; editIdx = -1; renderPanel(); });
+      }
+      wrap.querySelector(".rx-emoji-btn").addEventListener("mousedown", e=> e.preventDefault());
+      wrap.querySelector(".rx-emoji-btn").addEventListener("click", ()=>{
+        const open = panel.style.display === "none";
+        panel.style.display = open ? "" : "none";
+        if(open){ editMode = false; editIdx = -1; renderPanel(); }
+      });
+      instances.push({ renderPanel: ()=>{ if(panel.style.display !== "none") renderPanel(); } });
+    }
+    return { mount, html: toHtml, text: toText, sanitize };
+  })();
+
   function dstr(d){ return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
   function todayStr(){ return dstr(new Date()); }
   function uidP(){ return "p" + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
@@ -999,6 +1255,8 @@
   /* ESC 키로 열려 있는 모달 닫기 */
   document.addEventListener("keydown", e=>{
     if(e.key !== "Escape") return;
+    const lb = document.getElementById("img-lightbox");
+    if(lb.classList.contains("open")){ lb.classList.remove("open"); return; }
     const nm = document.getElementById("name-modal");
     if(nm.classList.contains("open")){ closeModal("name-modal"); return; }
     document.querySelectorAll(".modal-overlay.open").forEach(m=> closeModal(m.id));
@@ -1083,10 +1341,10 @@
   }
   function trashTitle(t){
     const r = t.row;
-    if(t.table==="posts") return ((r.caption||"").split("\n")[0] || "(캡션 없음)") + " · " + r.scheduled_date;
+    if(t.table==="posts") return (RTE.text(r.caption||"").trim().split("\n")[0] || "(캡션 없음)") + " · " + r.scheduled_date;
     if(t.table==="events") return (r.title||"") + " · " + r.start_date + (r.end_date && r.end_date!==r.start_date ? " ~ " + r.end_date.slice(5) : "");
     if(t.table==="stories") return (r.title||"") + " · " + r.scheduled_date + " " + (r.scheduled_time||"").slice(0,5);
-    return (r.content||"").split("\n")[0] || "(내용 없음)";
+    return RTE.text(r.content||"").trim().split("\n")[0] || "(내용 없음)";
   }
   function updateTrashBadge(){
     const el = document.getElementById("trash-count");
@@ -1146,7 +1404,7 @@
     if(!confirm("영구 삭제할까요? 이 작업은 되돌릴 수 없습니다.")) return;
     const { error } = await sb.from(t.table).delete().eq("id", t.row.id);
     if(error){ alert("삭제 실패: "+error.message); return; }
-    if(t.table==="posts") removeStorageImages(t.row.images);
+    if(t.table==="posts" || t.table==="stories") removeStorageImages(t.row.images);
     removeTrash(t.table, t.row.id);
     updateTrashBadge();
   }
@@ -1262,7 +1520,7 @@
           if(!imgs[0] && p0.caption){
             const cap = document.createElement("div");
             cap.className = "slot-cap";
-            cap.textContent = p0.caption;
+            cap.textContent = RTE.text(p0.caption).trim();
             slot.appendChild(cap);
           }
           if(dayPosts.length > 1){
@@ -1385,7 +1643,7 @@
       const c = document.createElement("div");
       c.className = "ig-cell";
       const img = (p.images||[])[0];
-      c.innerHTML = (img ? `<img src="${escapeHtml(img)}" loading="lazy" alt="">` : `<div class="ig-txt">${escapeHtml((p.caption||"").slice(0,60))}</div>`)
+      c.innerHTML = (img ? `<img src="${escapeHtml(img)}" loading="lazy" alt="">` : `<div class="ig-txt">${escapeHtml(RTE.text(p.caption||"").trim().slice(0,60))}</div>`)
         + ((p.post_type==="reels") ? '<span class="ig-badge">▶</span>' : ((p.images||[]).length>1 ? '<span class="ig-badge">❐</span>' : ''))
         + (p.pinned ? '<span class="ig-pin">📌</span>' : '');
       c.addEventListener("click", ()=>{ closeModal("ig-modal"); openPostPreview(p); });
@@ -1566,7 +1824,7 @@
     }
 
     document.getElementById("preview-type").textContent = previewPost.post_type === "reels" ? "REELS" : "FEED";
-    document.getElementById("preview-caption").textContent = previewPost.caption || "(캡션 없음)";
+    document.getElementById("preview-caption").innerHTML = RTE.text(previewPost.caption||"").trim() ? RTE.html(previewPost.caption) : "(캡션 없음)";
     const hashtagsEl = document.getElementById("preview-hashtags");
     hashtagsEl.textContent = previewPost.hashtags || "";
     hashtagsEl.style.display = previewPost.hashtags ? "" : "none";
@@ -1646,6 +1904,10 @@
   document.getElementById("add-post-btn").addEventListener("click", ()=> openPostModalForNew());
   document.getElementById("post-cancel-btn").addEventListener("click", ()=> closeModal("post-modal"));
 
+
+  /* 입력칸에 서식 도구 연결 */
+  ["post-caption","memo-content","story-notes"].forEach(id=> RTE.mount(document.getElementById(id)));
+
   /* ================= 이미지 압축 / 저장소 정리 ================= */
   const IMG_MAX_W = 1080, IMG_QUALITY = 0.85;
   function compressImage(file){
@@ -1675,9 +1937,10 @@
     if(paths.length){ try{ sb.storage.from("post-images").remove(paths); }catch(e){} }
   }
 
-  async function resolveImageUrls(){
+  async function resolveImageUrls(items){
+    items = items || imageItems;
     const urls = [];
-    for(const item of imageItems){
+    for(const item of items){
       if(item.kind === "existing"){ urls.push(item.url); continue; }
       const comp = await compressImage(item.file);
       const path = `${Date.now()}_${Math.random().toString(36).slice(2,8)}.${comp.ext}`;
@@ -1837,7 +2100,7 @@
       <div class="sd-title">${escapeHtml(ev.title)}</div>
       <div class="sd-grid">
         <div class="sd-full sd-field"><div class="sd-label">기간</div><div class="sd-value">${period}</div></div>
-        <div class="sd-full sd-field"><div class="sd-label">내용</div>${ev.content ? `<div class="sd-box">${escapeHtml(ev.content)}</div>` : '<div class="sd-value" style="color:var(--ink-faint);font-weight:400;">없음</div>'}</div>
+        <div class="sd-full sd-field"><div class="sd-label">내용</div>${ev.content ? `<div class="sd-box">${RTE.html(ev.content)}</div>` : '<div class="sd-value" style="color:var(--ink-faint);font-weight:400;">없음</div>'}</div>
       </div>
       <div class="bp-note">브랜딩플래너에 등록된 일정이에요. 수정은 브랜딩플래너에서만 할 수 있어요.</div>`;
     openModal("bp-event-modal");
@@ -2092,6 +2355,8 @@
     document.getElementById("story-status-row").style.opacity = enabled ? "" : "0.6";
     document.getElementById("story-extra-row").style.pointerEvents = enabled ? "" : "none";
     document.getElementById("story-extra-row").style.opacity = enabled ? "" : "0.6";
+    storyDropEl.style.pointerEvents = enabled ? "" : "none";
+    document.querySelectorAll(".story-chip .chip-remove").forEach(el=> el.style.display = enabled ? "" : "none");
   }
 
   function setStoryStatusSelect(status){
@@ -2103,9 +2368,83 @@
     el.addEventListener("click", ()=> setStoryStatusSelect(el.dataset.status));
   });
 
+  /* ---------- 스토리 이미지 ---------- */
+  let storyImgItems = [];
+  const STORY_IMG_MAX = 5;
+  const storyDropEl = document.getElementById("story-img-drop");
+  function renderStoryImgChips(){
+    const strip = document.getElementById("story-img-strip");
+    strip.innerHTML = "";
+    storyImgItems.forEach((item, idx)=>{
+      const chip = document.createElement("div");
+      chip.className = "img-chip story-chip";
+      const img = document.createElement("img");
+      img.src = item.kind === "existing" ? item.url : item.previewUrl;
+      chip.appendChild(img);
+      const remove = document.createElement("span");
+      remove.className = "chip-remove"; remove.textContent = "×";
+      remove.addEventListener("click", ev=>{
+        ev.stopPropagation();
+        if(item.previewUrl) URL.revokeObjectURL(item.previewUrl);
+        storyImgItems.splice(idx,1);
+        renderStoryImgChips();
+      });
+      chip.appendChild(remove);
+      strip.appendChild(chip);
+    });
+  }
+  function resetStoryImages(){
+    storyImgItems.forEach(it=>{ if(it.previewUrl) URL.revokeObjectURL(it.previewUrl); });
+    storyImgItems = [];
+    document.getElementById("story-img-input").value = "";
+    renderStoryImgChips();
+  }
+  function addStoryFiles(files){
+    Array.from(files).forEach(file=>{
+      if(!file.type.startsWith("image/")) return;
+      if(storyImgItems.length >= STORY_IMG_MAX){ alert("스토리 이미지는 최대 "+STORY_IMG_MAX+"장까지 올릴 수 있어요."); return; }
+      storyImgItems.push({ id: uidS(), kind:"new", file, previewUrl: URL.createObjectURL(file) });
+    });
+    renderStoryImgChips();
+  }
+  storyDropEl.addEventListener("click", ()=> document.getElementById("story-img-input").click());
+  document.getElementById("story-img-input").addEventListener("change", e=>{ addStoryFiles(e.target.files); e.target.value = ""; });
+  ["dragenter","dragover"].forEach(evt=> storyDropEl.addEventListener(evt, e=>{ e.preventDefault(); e.stopPropagation(); storyDropEl.classList.add("drag-over"); }));
+  ["dragleave","drop"].forEach(evt=> storyDropEl.addEventListener(evt, e=>{ e.preventDefault(); e.stopPropagation(); storyDropEl.classList.remove("drag-over"); }));
+  storyDropEl.addEventListener("drop", e=>{ if(e.dataTransfer?.files?.length) addStoryFiles(e.dataTransfer.files); });
+
+  /* ---------- 이미지 원본 크기 보기 ---------- */
+  let lbUrls = [], lbIdx = 0;
+  function showLightbox(){
+    document.getElementById("lb-img").src = lbUrls[lbIdx];
+    document.getElementById("lb-info").textContent = lbUrls.length > 1 ? (lbIdx+1)+" / "+lbUrls.length : "";
+    document.getElementById("lb-prev").style.display = document.getElementById("lb-next").style.display = lbUrls.length > 1 ? "" : "none";
+  }
+  function openLightbox(urls, idx){
+    lbUrls = urls; lbIdx = idx || 0;
+    const stage = document.getElementById("lb-stage");
+    stage.classList.remove("fit");
+    document.getElementById("lb-fit").textContent = "화면에 맞추기";
+    showLightbox();
+    document.getElementById("img-lightbox").classList.add("open");
+    stage.scrollTop = 0;
+  }
+  document.getElementById("lb-close").addEventListener("click", ()=> document.getElementById("img-lightbox").classList.remove("open"));
+  document.getElementById("lb-prev").addEventListener("click", ()=>{ lbIdx = (lbIdx-1+lbUrls.length)%lbUrls.length; showLightbox(); });
+  document.getElementById("lb-next").addEventListener("click", ()=>{ lbIdx = (lbIdx+1)%lbUrls.length; showLightbox(); });
+  document.getElementById("lb-fit").addEventListener("click", ()=>{
+    const stage = document.getElementById("lb-stage");
+    const fit = stage.classList.toggle("fit");
+    document.getElementById("lb-fit").textContent = fit ? "원본 크기로 보기" : "화면에 맞추기";
+  });
+  document.getElementById("lb-stage").addEventListener("click", e=>{
+    if(e.target.id === "lb-stage") document.getElementById("img-lightbox").classList.remove("open");
+  });
+
   function openStoryModalForNew(dateStr){
     if(!isOwner){ openModal("login-modal"); return; }
     editingStoryId = null;
+    resetStoryImages();
     document.getElementById("story-modal-title").textContent = "새 스토리";
     document.getElementById("story-date").value = dateStr || todayStr();
     document.getElementById("story-time").value = "";
@@ -2128,6 +2467,9 @@
 
   function openStoryModalForEdit(s){
     editingStoryId = s.id;
+    resetStoryImages();
+    storyImgItems = (s.images || []).map(url=> ({ id:url, kind:"existing", url }));
+    renderStoryImgChips();
     document.getElementById("story-modal-title").textContent = isOwner ? "스토리 수정" : "스토리 내용";
     document.getElementById("story-date").value = s.scheduled_date;
     document.getElementById("story-time").value = (s.scheduled_time||"").slice(0,5);
@@ -2180,8 +2522,12 @@
         <div><div class="sd-label">시간</div><div class="sd-value">${(s.scheduled_time||"").slice(0,5)}</div></div>
         ${extras.join("")}
         ${extras.length ? "" : `<div class="sd-full sd-field"><div class="sd-label">추가 요청사항</div><div class="sd-value" style="color:var(--ink-faint);font-weight:400;">없음</div></div>`}
-        <div class="sd-full sd-field"><div class="sd-label">📝 비고</div>${s.notes ? `<div class="sd-box">${escapeHtml(s.notes)}</div>` : '<div class="sd-value" style="color:var(--ink-faint);font-weight:400;">없음</div>'}</div>
+        ${(s.images||[]).length ? `<div class="sd-full sd-field"><div class="sd-label">🖼 스토리 이미지</div><div class="sd-thumbs">${s.images.map((u,i)=>`<button type="button" class="sd-thumb" data-i="${i}" title="클릭하면 원본 크기로 볼 수 있어요"><img src="${escapeHtml(u)}" alt="" loading="lazy"></button>`).join("")}</div></div>` : ""}
+        <div class="sd-full sd-field"><div class="sd-label">📝 비고</div>${s.notes ? `<div class="sd-box">${RTE.html(s.notes)}</div>` : '<div class="sd-value" style="color:var(--ink-faint);font-weight:400;">없음</div>'}</div>
       </div>`;
+    document.querySelectorAll("#story-detail-body .sd-thumb").forEach(b=>{
+      b.addEventListener("click", ()=> openLightbox(s.images, Number(b.dataset.i)));
+    });
     setLastEdit("story-detail-last-edit", s);
     openModal("story-detail-modal");
   }
@@ -2235,16 +2581,21 @@
     const extra_link = selectedStoryExtras.link ? document.getElementById("story-extra-link").value.trim() : null;
     const extra_regram = selectedStoryExtras.regram ? document.getElementById("story-extra-regram").value.trim() : null;
     const extra_countdown = selectedStoryExtras.countdown ? document.getElementById("story-extra-countdown").value.trim() : null;
+    let images;
+    try{ images = await resolveImageUrls(storyImgItems); }
+    catch(err){ return; }
 
     if(editingStoryId){
-      const row = Object.assign({ id: editingStoryId, scheduled_date:date, scheduled_time:time, title, campaign, notes, extra_link, extra_regram, extra_countdown, part, status }, stamp);
+      const oldStory = stories.find(x=>x.id===editingStoryId);
+      const row = Object.assign({ id: editingStoryId, scheduled_date:date, scheduled_time:time, title, campaign, notes, extra_link, extra_regram, extra_countdown, part, status, images }, stamp);
       const { error } = await sb.from("stories").update({
-        scheduled_date:date, scheduled_time:time, title, campaign, notes, extra_link, extra_regram, extra_countdown, part, status, ...stamp
+        scheduled_date:date, scheduled_time:time, title, campaign, notes, extra_link, extra_regram, extra_countdown, part, status, images, ...stamp
       }).eq("id", editingStoryId);
       if(error){ alert("수정 실패: "+error.message); return; }
+      if(oldStory) removeStorageImages((oldStory.images||[]).filter(u=> !images.includes(u)));
       upsertLocal(stories, row);
     } else {
-      const row = Object.assign({ id: uidS(), scheduled_date:date, scheduled_time:time, title, campaign, notes, extra_link, extra_regram, extra_countdown, part, status }, stamp);
+      const row = Object.assign({ id: uidS(), scheduled_date:date, scheduled_time:time, title, campaign, notes, extra_link, extra_regram, extra_countdown, part, status, images }, stamp);
       const { error } = await sb.from("stories").insert(row);
       if(error){ alert("저장 실패: "+error.message); return; }
       upsertLocal(stories, row);
@@ -2394,7 +2745,7 @@
       .forEach(m=>{
         const note = document.createElement("div");
         note.className = "memo-sidebar-note";
-        note.textContent = m.content || "";
+        note.innerHTML = RTE.html(m.content || "");
         const date = document.createElement("div");
         date.className = "memo-sidebar-date";
         date.textContent = m.created_at ? fmtMemoDate(m.created_at) : "";
@@ -2442,7 +2793,7 @@
     events = split("events", eventsRes.data);
     stories = split("stories", storiesRes.data);
     memos = split("cc_memos", memosRes.data);
-    purge.forEach(p=>{ sb.from(p.table).delete().eq("id", p.id); if(p.table==="posts") removeStorageImages(p.images); });
+    purge.forEach(p=>{ sb.from(p.table).delete().eq("id", p.id); if(p.table==="posts" || p.table==="stories") removeStorageImages(p.images); });
     updateTrashBadge();
     render();
   }
